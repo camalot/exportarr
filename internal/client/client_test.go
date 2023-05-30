@@ -59,7 +59,7 @@ func TestDoRequest(t *testing.T) {
 			}{}
 			expected := target
 			expected.Test = "asdf2"
-			client, err := NewClient(ts.URL, false, nil)
+			client, err := NewClient(ts.URL, false, nil, "")
 			if err != nil {
 				panic(err)
 			}
