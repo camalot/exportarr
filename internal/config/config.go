@@ -51,7 +51,7 @@ func LoadConfig(flags *flag.FlagSet) (*Config, error) {
 		"api-version":      "v3",
 		"port":             "8081",
 		"interface":        "0.0.0.0",
-		"api-root-path":    "", 
+		"api-root-path":    "/", 
 	}, "."), nil)
 	if err != nil {
 		return nil, err
