@@ -43,6 +43,7 @@ func TestCollect(t *testing.T) {
 		require.Equal(API_KEY, r.URL.Query().Get("apikey"))
 		require.Equal("json", r.URL.Query().Get("output"))
 	})
+
 	require.NoError(err)
 
 	defer ts.Close()
@@ -51,6 +52,63 @@ func TestCollect(t *testing.T) {
 		URL:    ts.URL,
 		ApiKey: API_KEY,
 		ApiRootPath: "/sabnzbd",
+	}
+	collector, err := NewSabnzbdCollector(config)
+	require.NoError(err)
+
+	b, err := os.ReadFile("../test_fixtures/expected_metrics.txt")
+	require.NoError(err)
+
+	expected := strings.Replace(string(b), "http://127.0.0.1:39965", ts.URL, -1)
+	f := strings.NewReader(expected)
+
+	require.NotPanics(func() {
+		err = testutil.CollectAndCompare(collector, f,
+			"sabnzbd_downloaded_bytes",
+			"sabnzbd_server_downloaded_bytes",
+			"sabnzbd_server_articles_total",
+			"sabnzbd_server_articles_success",
+			"sabnzbd_info",
+			"sabnzbd_paused",
+			"sabnzbd_paused_all",
+			"sabnzbd_pause_duration_seconds",
+			"sabnzbd_disk_used_bytes",
+			"sabnzbd_disk_total_bytes",
+			"sabnzbd_remaining_quota_bytes",
+			"sabnzbd_quota_bytes",
+			"sabnzbd_article_cache_articles",
+			"sabnzbd_article_cache_bytes",
+			"sabnzbd_speed_bps",
+			"sabnzbd_remaining_bytes",
+			"sabnzbd_total_bytes",
+			"sabnzbd_queue_size",
+			"sabnzbd_status",
+			"sabnzbd_time_estimate_seconds",
+			"sabnzbd_queue_length",
+			"sabnzbd_warnings",
+		)
+	})
+	require.NoError(err)
+
+	require.GreaterOrEqual(29, testutil.CollectAndCount(collector))
+}
+
+func TestCollect_WithCustomApiRootPath(t *testing.T) {
+	require := require.New(t)
+	ts, err := newTestServer(t, func(w http.ResponseWriter, r *http.Request) {
+		require.Equal("/api", r.URL.Path)
+		require.Equal(API_KEY, r.URL.Query().Get("apikey"))
+		require.Equal("json", r.URL.Query().Get("output"))
+	})
+
+	require.NoError(err)
+
+	defer ts.Close()
+
+	config := &config.SabnzbdConfig{
+		URL:    ts.URL,
+		ApiKey: API_KEY,
+		ApiRootPath: "/",
 	}
 	collector, err := NewSabnzbdCollector(config)
 	require.NoError(err)
