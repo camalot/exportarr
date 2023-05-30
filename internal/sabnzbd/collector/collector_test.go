@@ -50,6 +50,7 @@ func TestCollect(t *testing.T) {
 	config := &config.SabnzbdConfig{
 		URL:    ts.URL,
 		ApiKey: API_KEY,
+		ApiRootPath: "/sabnzbd",
 	}
 	collector, err := NewSabnzbdCollector(config)
 	require.NoError(err)
@@ -102,6 +103,7 @@ func TestCollect_FailureDoesntPanic(t *testing.T) {
 	config := &config.SabnzbdConfig{
 		URL:    ts.URL,
 		ApiKey: API_KEY,
+		ApiRootPath: "/sabnzbd",
 	}
 	collector, err := NewSabnzbdCollector(config)
 	require.NoError(err)
