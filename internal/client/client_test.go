@@ -14,7 +14,7 @@ func TestNewClient(t *testing.T) {
 	u := "http://localhost"
 
 	require := require.New(t)
-	c, err := NewClient(u, true, nil)
+	c, err := NewClient(u, true, nil, "")
 	require.NoError(err, "NewClient should not return an error")
 	require.NotNil(c, "NewClient should return a client")
 	require.Equal(u, c.URL.String(), "NewClient should set the correct URL")
