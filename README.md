@@ -1,6 +1,6 @@
 # exportarr
 
-AIO Prometheus Exporter for Sonarr, Radarr or Lidarr
+AIO Prometheus Exporter for Sonarr, Radarr, Lidarr, or Sabnzbd.
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/onedr0p/exportarr)](https://goreportcard.com/report/github.com/onedr0p/exportarr)
 
