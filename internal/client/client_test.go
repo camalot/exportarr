@@ -90,7 +90,7 @@ func TestDoRequest_PanicRecovery(t *testing.T) {
 	}))
 	defer ts.Close()
 
-	client, err := NewClient(ts.URL, false, nil)
+	client, err := NewClient(ts.URL, false, nil, "")
 	require.Nil(err, "NewClient should not return an error")
 	require.NotNil(client, "NewClient should return a client")
 
