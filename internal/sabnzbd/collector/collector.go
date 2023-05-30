@@ -174,7 +174,7 @@ type SabnzbdCollector struct {
 // TODO: Add a sab-specific config struct to abstract away the config parsing
 func NewSabnzbdCollector(config *config.SabnzbdConfig) (*SabnzbdCollector, error) {
 	auther := auth.ApiKeyAuth{ApiKey: config.ApiKey}
-	client, err := client.NewClient(config.URL, config.DisableSSLVerify, auther)
+	client, err := client.NewClient(config.URL, config.DisableSSLVerify, auther, config.ApiRootPath)
 	if err != nil {
 		return nil, fmt.Errorf("Failed to build client: %w", err)
 	}
@@ -187,7 +187,7 @@ func NewSabnzbdCollector(config *config.SabnzbdConfig) (*SabnzbdCollector, error
 }
 
 func (s *SabnzbdCollector) doRequest(mode string, target interface{}) error {
-	return s.client.DoRequest("/sabnzbd/api", target, map[string]string{"mode": mode})
+	return s.client.DoRequest("/api", target, map[string]string{"mode": mode})
 }
 
 func (s *SabnzbdCollector) getQueueStats() (*model.QueueStats, error) {
