@@ -17,7 +17,7 @@ func NewClient(config *config.ArrConfig) (*base_client.Client, error) {
 	if err != nil {
 		return nil, err
 	}
-	return base_client.NewClient(config.BaseURL(), config.DisableSSLVerify, auth)
+	return base_client.NewClient(config.BaseURL(), config.DisableSSLVerify, auth, config.ApiRootPath)
 }
 
 func NewAuth(config *config.ArrConfig) (client.Authenticator, error) {
@@ -32,6 +32,7 @@ func NewAuth(config *config.ArrConfig) (client.Authenticator, error) {
 			Username:    config.AuthUsername,
 			Password:    config.AuthPassword,
 			ApiKey:      config.ApiKey,
+			ApiRootPath: config.ApiRootPath,
 			AuthBaseURL: u,
 			Transport:   client.BaseTransport(config.DisableSSLVerify),
 		}
@@ -40,10 +41,13 @@ func NewAuth(config *config.ArrConfig) (client.Authenticator, error) {
 			Username: config.AuthUsername,
 			Password: config.AuthPassword,
 			ApiKey:   config.ApiKey,
+			ApiRootPath: config.ApiRootPath,
+
 		}
 	} else {
 		auth = &ApiKeyAuth{
 			ApiKey: config.ApiKey,
+			ApiRootPath: config.ApiRootPath,
 		}
 	}
 	return auth, nil
@@ -51,6 +55,7 @@ func NewAuth(config *config.ArrConfig) (client.Authenticator, error) {
 
 type ApiKeyAuth struct {
 	ApiKey string
+	ApiRootPath string
 }
 
 func (a *ApiKeyAuth) Auth(req *http.Request) error {
@@ -62,6 +67,7 @@ type BasicAuth struct {
 	Username string
 	Password string
 	ApiKey   string
+	ApiRootPath string
 }
 
 func (a *BasicAuth) Auth(req *http.Request) error {
@@ -74,6 +80,7 @@ type FormAuth struct {
 	Username    string
 	Password    string
 	ApiKey      string
+	ApiRootPath string
 	AuthBaseURL *url.URL
 	Transport   http.RoundTripper
 	cookie      *http.Cookie

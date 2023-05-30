@@ -41,6 +41,7 @@ type ArrConfig struct {
 	EnableAdditionalMetrics bool           `koanf:"enable-additional-metrics"`
 	URL                     string         `koanf:"url" validate:"required|url"`                        // stores rendered Arr URL (with api version)
 	ApiKey                  string         `koanf:"api-key" validate:"required|regex:(^[a-z0-9]{32}$)"` // stores the API key
+	ApiRootPath             string         `koanf:"api-root-path"`                                      // stores the API root path
 	DisableSSLVerify        bool           `koanf:"disable-ssl-verify"`                                 // stores the disable SSL verify flag
 	Prowlarr                ProwlarrConfig `koanf:"prowlarr"`
 	k                       *koanf.Koanf
@@ -99,6 +100,7 @@ func LoadArrConfig(conf base_config.Config, flags *flag.FlagSet) (*ArrConfig, er
 		App:              conf.App,
 		URL:              conf.URL,
 		ApiKey:           conf.ApiKey,
+		ApiRootPath:      conf.ApiRootPath,
 		DisableSSLVerify: conf.DisableSSLVerify,
 		k:                k,
 	}
@@ -140,6 +142,7 @@ func (c ArrConfig) Translates() map[string]string {
 		"XMLConfig":               "config",
 		"AuthUsername":            "auth-username",
 		"AuthPassword":            "auth-password",
+		"ApiRootPath":             "api-root-path",
 		"FormAuth":                "form-auth",
 		"EnableUnknownQueueItems": "enable-unknown-queue-items",
 		"EnableAdditionalMetrics": "enable-additional-metrics",
