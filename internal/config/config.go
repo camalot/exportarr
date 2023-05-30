@@ -21,6 +21,7 @@ func RegisterConfigFlags(flags *flag.FlagSet) {
 	flags.StringP("url", "u", "", "URL to *arr instance")
 	flags.StringP("api-key", "a", "", "API Key for *arr instance")
 	flags.String("api-key-file", "", "File containing API Key for *arr instance")
+	flags.String("api-root-path", "", "Root path for api calls.")
 	flags.Bool("disable-ssl-verify", false, "Disable SSL verification")
 	flags.StringP("interface", "i", "", "IP address to listen on")
 	flags.IntP("port", "p", 0, "Port to listen on")
@@ -33,6 +34,7 @@ type Config struct {
 	URL              string `koanf:"url"`
 	ApiKey           string `koanf:"api-key"`
 	ApiKeyFile       string `koanf:"api-key-file"`
+	ApiRootPath      string `koanf:"api-root-path"`
 	Port             int    `koanf:"port" validate:"required"`
 	Interface        string `koanf:"interface" validate:"required|ip"`
 	DisableSSLVerify bool   `koanf:"disable-ssl-verify"`
@@ -44,11 +46,12 @@ func LoadConfig(flags *flag.FlagSet) (*Config, error) {
 
 	// Defaults
 	err := k.Load(confmap.Provider(map[string]interface{}{
-		"log-level":   "info",
-		"log-format":  "console",
-		"api-version": "v3",
-		"port":        "8081",
-		"interface":   "0.0.0.0",
+		"log-level":        "info",
+		"log-format":       "console",
+		"api-version":      "v3",
+		"port":             "8081",
+		"interface":        "0.0.0.0",
+		"api-root-path":    "", 
 	}, "."), nil)
 	if err != nil {
 		return nil, err
@@ -122,6 +125,7 @@ func (c Config) Translates() map[string]string {
 		"ApiKey":           "api-key",
 		"ApiKeyFile":       "api-key-file",
 		"ApiVersion":       "api-version",
+		"ApiRootPath":      "api-root-path",
 		"Port":             "port",
 		"Interface":        "interface",
 		"DisableSSLVerify": "disable-ssl-verify",

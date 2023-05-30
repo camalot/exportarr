@@ -15,11 +15,12 @@ import (
 // Client struct is an *Arr client.
 type Client struct {
 	httpClient http.Client
-	URL        url.URL
+	URL            url.URL
+	APIRootPath    string
 }
 
 // NewClient method initializes a new *Arr client.
-func NewClient(baseURL string, insecureSkipVerify bool, auth Authenticator) (*Client, error) {
+func NewClient(baseURL string, insecureSkipVerify bool, auth Authenticator, apiRoot string) (*Client, error) {
 
 	u, err := url.Parse(baseURL)
 	if err != nil {
@@ -34,6 +35,7 @@ func NewClient(baseURL string, insecureSkipVerify bool, auth Authenticator) (*Cl
 			Transport: NewExportarrTransport(BaseTransport(insecureSkipVerify), auth),
 		},
 		URL: *u,
+		APIRootPath: apiRoot,
 	}, nil
 }
 
@@ -69,7 +71,7 @@ func (c *Client) DoRequest(endpoint string, target interface{}, queryParams ...m
 			values.Add(k, v)
 		}
 	}
-	url := c.URL.JoinPath(endpoint)
+	url := c.URL.JoinPath(c.APIRootPath, endpoint)
 	url.RawQuery = values.Encode()
 	zap.S().Infow("Sending HTTP request",
 		"url", url)
