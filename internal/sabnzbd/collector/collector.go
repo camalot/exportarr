@@ -179,8 +179,6 @@ func NewSabnzbdCollector(config *config.SabnzbdConfig) (*SabnzbdCollector, error
 		return nil, fmt.Errorf("Failed to build client: %w", err)
 	}
 
-	println("ApiRootPath: " + config.ApiRootPath)
-
 	return &SabnzbdCollector{
 		cache:   NewServersStatsCache(),
 		client:  client,
