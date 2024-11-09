@@ -35,7 +35,7 @@ type whisparrCollector struct {
 	errorMetric              *prometheus.Desc  // Error Description for use with InvalidMetric
 }
 
-func NewSonarrCollector(conf *config.ArrConfig) *whisparrCollector {
+func NewWhisparrCollector(conf *config.ArrConfig) *whisparrCollector {
 	return &whisparrCollector{
 		config: conf,
 		seriesMetric: prometheus.NewDesc(
