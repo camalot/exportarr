@@ -16,58 +16,123 @@ const (
 )
 
 type whisparrCollector struct {
-	config                  *config.ArrConfig // App configuration
-	seriesMetric            *prometheus.Desc  // Total number of series
-	seriesDownloadedMetric  *prometheus.Desc  // Total number of downloaded series
-	seriesMonitoredMetric   *prometheus.Desc  // Total number of monitored series
-	seriesUnmonitoredMetric *prometheus.Desc  // Total number of unmonitored series
-	seriesFileSizeMetric    *prometheus.Desc  // Total fizesize of all series in bytes
-	errorMetric             *prometheus.Desc  // Error Description for use with InvalidMetric
-	diskSpaceMetric         *prometheus.Desc  // Total disk space
-	blocklistMetric         *prometheus.Desc  // Total number of blocklisted items
-	backupsMetric           *prometheus.Desc  // Total number of backups
-	indexersMetric          *prometheus.Desc  // indexers available
-	// tagsMetric              *prometheus.Desc  // tags available
+	config                   *config.ArrConfig // App configuration
+	seriesMetric             *prometheus.Desc  // Total number of series
+	seriesDownloadedMetric   *prometheus.Desc  // Total number of downloaded series
+	seriesMonitoredMetric    *prometheus.Desc  // Total number of monitored series
+	seriesUnmonitoredMetric  *prometheus.Desc  // Total number of unmonitored series
+	seriesFileSizeMetric     *prometheus.Desc  // Total fizesize of all series in bytes
+	seasonMetric             *prometheus.Desc  // Total number of seasons
+	seasonDownloadedMetric   *prometheus.Desc  // Total number of downloaded seasons
+	seasonMonitoredMetric    *prometheus.Desc  // Total number of monitored seasons
+	seasonUnmonitoredMetric  *prometheus.Desc  // Total number of unmonitored seasons
+	episodeMetric            *prometheus.Desc  // Total number of episodes
+	episodeMonitoredMetric   *prometheus.Desc  // Total number of monitored episodes
+	episodeUnmonitoredMetric *prometheus.Desc  // Total number of unmonitored episodes
+	episodeDownloadedMetric  *prometheus.Desc  // Total number of downloaded episodes
+	episodeMissingMetric     *prometheus.Desc  // Total number of missing episodes
+	episodeQualitiesMetric   *prometheus.Desc  // Total number of episodes by quality
+	errorMetric              *prometheus.Desc  // Error Description for use with InvalidMetric
 }
 
-func NewWhisparrCollector(c *config.ArrConfig) *whisparrCollector {
+func NewSonarrCollector(conf *config.ArrConfig) *whisparrCollector {
 	return &whisparrCollector{
-		config: c,
+		config: conf,
 		seriesMetric: prometheus.NewDesc(
 			prometheus.BuildFQName(whisparr_namespace, "series", "total"),
 			"Total number of series",
 			nil,
-			prometheus.Labels{"url": c.URL},
+			prometheus.Labels{"url": conf.URL},
 		),
 		seriesDownloadedMetric: prometheus.NewDesc(
-			"sonarr_series_downloaded_total",
+			prometheus.BuildFQName(whisparr_namespace, "series", "downloaded_total"),
 			"Total number of downloaded series",
 			nil,
-			prometheus.Labels{"url": c.URL},
+			prometheus.Labels{"url": conf.URL},
 		),
 		seriesMonitoredMetric: prometheus.NewDesc(
-			"sonarr_series_monitored_total",
+			prometheus.BuildFQName(whisparr_namespace, "series", "monitored_total"),
 			"Total number of monitored series",
 			nil,
-			prometheus.Labels{"url": c.URL},
+			prometheus.Labels{"url": conf.URL},
 		),
 		seriesUnmonitoredMetric: prometheus.NewDesc(
-			"sonarr_series_unmonitored_total",
+			prometheus.BuildFQName(whisparr_namespace, "series", "unmonitored_total"),
 			"Total number of unmonitored series",
 			nil,
-			prometheus.Labels{"url": c.URL},
+			prometheus.Labels{"url": conf.URL},
 		),
 		seriesFileSizeMetric: prometheus.NewDesc(
-			"sonarr_series_filesize_bytes",
+			prometheus.BuildFQName(whisparr_namespace, "series", "filesize_bytes"),
 			"Total fizesize of all series in bytes",
 			nil,
-			prometheus.Labels{"url": c.URL},
+			prometheus.Labels{"url": conf.URL},
+		),
+		seasonMetric: prometheus.NewDesc(
+			prometheus.BuildFQName(whisparr_namespace, "season", "total"),
+			"Total number of seasons",
+			nil,
+			prometheus.Labels{"url": conf.URL},
+		),
+		seasonDownloadedMetric: prometheus.NewDesc(
+			prometheus.BuildFQName(whisparr_namespace, "season", "downloaded_total"),
+			"Total number of downloaded seasons",
+			nil,
+			prometheus.Labels{"url": conf.URL},
+		),
+		seasonMonitoredMetric: prometheus.NewDesc(
+			prometheus.BuildFQName(whisparr_namespace, "season", "monitored_total"),
+			"Total number of monitored seasons",
+			nil,
+			prometheus.Labels{"url": conf.URL},
+		),
+		seasonUnmonitoredMetric: prometheus.NewDesc(
+			prometheus.BuildFQName(whisparr_namespace, "season", "unmonitored_total"),
+			"Total number of unmonitored seasons",
+			nil,
+			prometheus.Labels{"url": conf.URL},
+		),
+		episodeMetric: prometheus.NewDesc(
+			prometheus.BuildFQName(whisparr_namespace, "episode", "total"),
+			"Total number of episodes",
+			nil,
+			prometheus.Labels{"url": conf.URL},
+		),
+		episodeMonitoredMetric: prometheus.NewDesc(
+			prometheus.BuildFQName(whisparr_namespace, "episode", "monitored_total"),
+			"Total number of monitored episodes",
+			nil,
+			prometheus.Labels{"url": conf.URL},
+		),
+		episodeUnmonitoredMetric: prometheus.NewDesc(
+			prometheus.BuildFQName(whisparr_namespace, "episode", "unmonitored_total"),
+			"Total number of unmonitored episodes",
+			nil,
+			prometheus.Labels{"url": conf.URL},
+		),
+		episodeDownloadedMetric: prometheus.NewDesc(
+			prometheus.BuildFQName(whisparr_namespace, "episode", "downloaded_total"),
+			"Total number of downloaded episodes",
+			nil,
+			prometheus.Labels{"url": conf.URL},
+		),
+		episodeMissingMetric: prometheus.NewDesc(
+			prometheus.BuildFQName(whisparr_namespace, "episode", "missing_total"),
+			"Total number of missing episodes",
+			nil,
+			prometheus.Labels{"url": conf.URL},
+		),
+		episodeQualitiesMetric: prometheus.NewDesc(
+			prometheus.BuildFQName(whisparr_namespace, "episode", "quality_total"),
+			"Total number of downloaded episodes by quality",
+			[]string{"quality"},
+			prometheus.Labels{"url": conf.URL},
 		),
 		errorMetric: prometheus.NewDesc(
 			prometheus.BuildFQName(whisparr_namespace, "collector", "error"),
 			"Error while collecting metrics",
 			nil,
-			prometheus.Labels{"url": c.URL},
+			prometheus.Labels{"url": conf.URL},
 		),
 	}
 }
@@ -78,15 +143,20 @@ func (collector *whisparrCollector) Describe(ch chan<- *prometheus.Desc) {
 	ch <- collector.seriesMonitoredMetric
 	ch <- collector.seriesUnmonitoredMetric
 	ch <- collector.seriesFileSizeMetric
-	ch <- collector.errorMetric
-	ch <- collector.diskSpaceMetric
-	ch <- collector.blocklistMetric
-	ch <- collector.backupsMetric
-	ch <- collector.indexersMetric
+	ch <- collector.seasonMetric
+	ch <- collector.seasonDownloadedMetric
+	ch <- collector.seasonMonitoredMetric
+	ch <- collector.seasonUnmonitoredMetric
+	ch <- collector.episodeMetric
+	ch <- collector.episodeMonitoredMetric
+	ch <- collector.episodeUnmonitoredMetric
+	ch <- collector.episodeDownloadedMetric
+	ch <- collector.episodeMissingMetric
+	ch <- collector.episodeQualitiesMetric
 }
 
 func (collector *whisparrCollector) Collect(ch chan<- prometheus.Metric) {
-	// total := time.Now()
+	total := time.Now()
 	log := zap.S().With("collector", "whisparr")
 	c, err := client.NewClient(collector.config)
 	if err != nil {
@@ -95,7 +165,6 @@ func (collector *whisparrCollector) Collect(ch chan<- prometheus.Metric) {
 		ch <- prometheus.NewInvalidMetric(collector.errorMetric, err)
 		return
 	}
-
 	var seriesFileSize int64
 	var (
 		seriesDownloaded    = 0
@@ -105,13 +174,11 @@ func (collector *whisparrCollector) Collect(ch chan<- prometheus.Metric) {
 		seasonsDownloaded   = 0
 		seasonsMonitored    = 0
 		seasonsUnmonitored  = 0
-
 		episodes            = 0
 		episodesDownloaded  = 0
 		episodesMonitored   = 0
 		episodesUnmonitored = 0
 		episodesQualities   = map[string]int{}
-
 	)
 
 	cseries := []time.Duration{}
@@ -201,4 +268,35 @@ func (collector *whisparrCollector) Collect(ch chan<- prometheus.Metric) {
 		ch <- prometheus.NewInvalidMetric(collector.errorMetric, err)
 		return
 	}
+
+	ch <- prometheus.MustNewConstMetric(collector.seriesMetric, prometheus.GaugeValue, float64(len(series)))
+	ch <- prometheus.MustNewConstMetric(collector.seriesDownloadedMetric, prometheus.GaugeValue, float64(seriesDownloaded))
+	ch <- prometheus.MustNewConstMetric(collector.seriesMonitoredMetric, prometheus.GaugeValue, float64(seriesMonitored))
+	ch <- prometheus.MustNewConstMetric(collector.seriesUnmonitoredMetric, prometheus.GaugeValue, float64(seriesUnmonitored))
+	ch <- prometheus.MustNewConstMetric(collector.seriesFileSizeMetric, prometheus.GaugeValue, float64(seriesFileSize))
+	ch <- prometheus.MustNewConstMetric(collector.seasonMetric, prometheus.GaugeValue, float64(seasons))
+	ch <- prometheus.MustNewConstMetric(collector.seasonDownloadedMetric, prometheus.GaugeValue, float64(seasonsDownloaded))
+	ch <- prometheus.MustNewConstMetric(collector.seasonMonitoredMetric, prometheus.GaugeValue, float64(seasonsMonitored))
+	ch <- prometheus.MustNewConstMetric(collector.seasonUnmonitoredMetric, prometheus.GaugeValue, float64(seasonsUnmonitored))
+	ch <- prometheus.MustNewConstMetric(collector.episodeMetric, prometheus.GaugeValue, float64(episodes))
+	ch <- prometheus.MustNewConstMetric(collector.episodeDownloadedMetric, prometheus.GaugeValue, float64(episodesDownloaded))
+	ch <- prometheus.MustNewConstMetric(collector.episodeMissingMetric, prometheus.GaugeValue, float64(episodesMissing.TotalRecords))
+
+	if collector.config.EnableAdditionalMetrics {
+		ch <- prometheus.MustNewConstMetric(collector.episodeMonitoredMetric, prometheus.GaugeValue, float64(episodesMonitored))
+		ch <- prometheus.MustNewConstMetric(collector.episodeUnmonitoredMetric, prometheus.GaugeValue, float64(episodesUnmonitored))
+
+		if len(episodesQualities) > 0 {
+			for qualityName, count := range episodesQualities {
+				ch <- prometheus.MustNewConstMetric(collector.episodeQualitiesMetric, prometheus.GaugeValue, float64(count),
+					qualityName,
+				)
+			}
+		}
+	}
+	log.Debugw("Whisparr cycle completed",
+		"duration", time.Since(total),
+		"series_durations", cseries,
+	)
+
 }
