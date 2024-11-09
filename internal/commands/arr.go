@@ -17,6 +17,7 @@ func init() {
 	config.RegisterArrFlags(lidarrCmd.PersistentFlags())
 	config.RegisterArrFlags(readarrCmd.PersistentFlags())
 	config.RegisterArrFlags(prowlarrCmd.PersistentFlags())
+	config.RegisterArrFlags(whisparrCmd.PersistentFlags())
 	config.RegisterProwlarrFlags(prowlarrCmd.PersistentFlags())
 
 	rootCmd.AddCommand(
@@ -25,6 +26,7 @@ func init() {
 		lidarrCmd,
 		readarrCmd,
 		prowlarrCmd,
+		whisparrCmd,
 	)
 }
 
@@ -168,6 +170,31 @@ var prowlarrCmd = &cobra.Command{
 				collector.NewSystemStatusCollector(c),
 				collector.NewSystemHealthCollector(c,
 					collector.NewUnavailableIndexerEmitter(c.URL)),
+			)
+		})
+		return nil
+	},
+}
+
+var whisparrCmd = &cobra.Command{
+	Use:     "whisparr",
+	Aliases: []string{"w"},
+	Short:   "Prometheus Exporter for Whisparr",
+	Long:    "Prometheus Exporter for Whisparr.",
+	RunE: func(cmd *cobra.Command, args []string) error {
+		c, err := config.LoadArrConfig(*conf, cmd.PersistentFlags())
+		if err != nil {
+			return err
+		}
+		c.ApiVersion = "v1"
+		UsageOnError(cmd, c.Validate())
+
+		serveHttp(func(r *prometheus.Registry) {
+			r.MustRegister(
+				collector.NewWhisparrCollector(c),
+				collector.NewHistoryCollector(c),
+				collector.NewSystemStatusCollector(c),
+				collector.NewSystemHealthCollector(c),
 			)
 		})
 		return nil
