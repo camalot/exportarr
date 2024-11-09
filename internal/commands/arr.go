@@ -186,13 +186,15 @@ var whisparrCmd = &cobra.Command{
 		if err != nil {
 			return err
 		}
-		c.ApiVersion = "v1"
+		c.ApiVersion = "v3"
 		UsageOnError(cmd, c.Validate())
 
 		serveHttp(func(r *prometheus.Registry) {
 			r.MustRegister(
 				collector.NewWhisparrCollector(c),
+				collector.NewQueueCollector(c),
 				collector.NewHistoryCollector(c),
+				collector.NewRootFolderCollector(c),
 				collector.NewSystemStatusCollector(c),
 				collector.NewSystemHealthCollector(c),
 			)
