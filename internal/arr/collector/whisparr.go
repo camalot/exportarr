@@ -26,10 +26,8 @@ type whisparrCollector struct {
 	diskSpaceMetric         *prometheus.Desc  // Total disk space
 	blocklistMetric         *prometheus.Desc  // Total number of blocklisted items
 	backupsMetric           *prometheus.Desc  // Total number of backups
-	// /api/v3/health
-	systemStatusMetric      *prometheus.Desc  // System status
 	indexersMetric          *prometheus.Desc  // indexers available
-	tagsMetric              *prometheus.Desc  // tags available
+	// tagsMetric              *prometheus.Desc  // tags available
 }
 
 func NewWhisparrCollector(c *config.ArrConfig) *whisparrCollector {
@@ -84,12 +82,11 @@ func (collector *whisparrCollector) Describe(ch chan<- *prometheus.Desc) {
 	ch <- collector.diskSpaceMetric
 	ch <- collector.blocklistMetric
 	ch <- collector.backupsMetric
-	ch <- collector.systemStatusMetric
 	ch <- collector.indexersMetric
 }
 
 func (collector *whisparrCollector) Collect(ch chan<- prometheus.Metric) {
-	total := time.Now()
+	// total := time.Now()
 	log := zap.S().With("collector", "whisparr")
 	c, err := client.NewClient(collector.config)
 	if err != nil {
@@ -138,7 +135,7 @@ func (collector *whisparrCollector) Collect(ch chan<- prometheus.Metric) {
 		if s.Statistics.PercentOfEpisodes == 100 {
 			seriesDownloaded++
 		}
-		
+
 		seasons += s.Statistics.SeasonCount
 		episodes += s.Statistics.TotalEpisodeCount
 		episodesDownloaded += s.Statistics.EpisodeFileCount
