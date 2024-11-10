@@ -39,10 +39,10 @@ type ArrConfig struct {
 	FormAuth                bool           `koanf:"form-auth"`
 	EnableUnknownQueueItems bool           `koanf:"enable-unknown-queue-items"`
 	EnableAdditionalMetrics bool           `koanf:"enable-additional-metrics"`
-	URL                     string         `koanf:"url" validate:"required|url"`                        // stores rendered Arr URL (with api version)
+	URL                     string         `koanf:"url" validate:"required|url"`                           // stores rendered Arr URL (with api version)
 	ApiKey                  string         `koanf:"api-key" validate:"required|regex:(^[a-z0-9]{20,32}$)"` // stores the API key
-	ApiRootPath             string         `koanf:"api-root-path"`                                      // stores the API root path
-	DisableSSLVerify        bool           `koanf:"disable-ssl-verify"`                                 // stores the disable SSL verify flag
+	ApiRootPath             string         `koanf:"api-root-path"`                                         // stores the API root path
+	DisableSSLVerify        bool           `koanf:"disable-ssl-verify"`                                    // stores the disable SSL verify flag
 	Prowlarr                ProwlarrConfig `koanf:"prowlarr"`
 	Bazarr                  BazarrConfig   `koanf:"bazarr"`
 	k                       *koanf.Koanf
