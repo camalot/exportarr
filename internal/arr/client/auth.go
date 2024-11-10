@@ -45,7 +45,6 @@ func NewAuth(config *config.ArrConfig) (client.Authenticator, error) {
 			Password:    config.AuthPassword,
 			ApiKey:      config.ApiKey,
 			ApiRootPath: config.ApiRootPath,
-
 		}
 	} else {
 		auth = &ApiKeyAuth{
@@ -57,7 +56,7 @@ func NewAuth(config *config.ArrConfig) (client.Authenticator, error) {
 }
 
 type ApiKeyAuth struct {
-	ApiKey string
+	ApiKey      string
 	ApiRootPath string
 }
 

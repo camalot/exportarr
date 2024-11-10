@@ -9,7 +9,7 @@ type SabnzbdConfig struct {
 	URL              string `validate:"required|url"`
 	ApiKey           string `validate:"required"`
 	DisableSSLVerify bool
-	ApiRootPath      string 
+	ApiRootPath      string
 }
 
 func LoadSabnzbdConfig(conf base_config.Config) (*SabnzbdConfig, error) {
