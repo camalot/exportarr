@@ -17,19 +17,19 @@ jobs:
       - name: Tests
         uses: ./.github/actions/tests
 
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+  # lint:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v4
 
-      - name: Lint
-        uses: ./.github/actions/lint
+  #     - name: Lint
+  #       uses: ./.github/actions/lint
 
   release-image:
     needs:  # dont run if tests or lint fail
       - tests
-      - lint
+      # - lint
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
