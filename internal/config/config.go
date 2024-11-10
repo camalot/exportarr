@@ -46,12 +46,12 @@ func LoadConfig(flags *flag.FlagSet) (*Config, error) {
 
 	// Defaults
 	err := k.Load(confmap.Provider(map[string]interface{}{
-		"log-level":        "info",
-		"log-format":       "console",
-		"api-version":      "v3",
-		"port":             "8081",
-		"interface":        "0.0.0.0",
-		"api-root-path":    "/", 
+		"log-level":     "info",
+		"log-format":    "console",
+		"api-version":   "v3",
+		"port":          "8081",
+		"interface":     "0.0.0.0",
+		"api-root-path": "/", 
 	}, "."), nil)
 	if err != nil {
 		return nil, err

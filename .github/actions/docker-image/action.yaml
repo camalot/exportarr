@@ -40,21 +40,22 @@ runs:
           type=semver,pattern={{major}},prefix=v
 
     - name: Docker meta
-      if: inputs.beta == 'true'
-      id: meta
+      if: inputs.branch == 'true'
+      id: meta-branch
       uses: docker/metadata-action@v5
       with:
         images: ghcr.io/${{ github.repository }}
         flavor: |
           latest=false
           prefix=
-          suffix=-{{github.ref}}
+          suffix=
         tags: |
-          type=raw,value=beta,enable=true
+          type=raw,value={{github.ref}},enable=true
           type=ref,event=branch
-          type=semver,pattern={{version}}
-          type=semver,pattern={{major}}.{{minor}}
-          type=semver,pattern={{major}}
+
+        # type=semver,pattern={{version}}
+        # type=semver,pattern={{major}}.{{minor}}
+        # type=semver,pattern={{major}}
 
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v3

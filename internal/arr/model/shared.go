@@ -52,17 +52,16 @@ type SystemHealthMessage struct {
 	WikiURL string `json:"wikiUrl"`
 }
 
-
 type ArrIndexer []struct {
 	Name                    string `json:"name"`
-	EnableRss               bool `json:"enableRss"`
-	EnableAutomaticSearch   bool `json:"enableAutomaticSearch"`
-	EnableInteractiveSearch bool `json:"enableInteractiveSearch"`
-	SupportsRss             bool `json:"supportsRss"`
-	SupportsSearch          bool `json:"supportsSearch"`
+	EnableRss               bool   `json:"enableRss"`
+	EnableAutomaticSearch   bool   `json:"enableAutomaticSearch"`
+	EnableInteractiveSearch bool   `json:"enableInteractiveSearch"`
+	SupportsRss             bool   `json:"supportsRss"`
+	SupportsSearch          bool   `json:"supportsSearch"`
 	Protocol                string `json:"protocol"`
 	Implementation          string `json:"implementation"`
-	Priority                int `json:"priority"`
+	Priority                int    `json:"priority"`
 
 	// Fields   []struct {
 	// 	Name string `json:"name"`

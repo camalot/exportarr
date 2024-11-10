@@ -41,15 +41,15 @@ func NewAuth(config *config.ArrConfig) (client.Authenticator, error) {
 		}
 	} else if config.UseBasicAuth() {
 		auth = &BasicAuth{
-			Username: config.AuthUsername,
-			Password: config.AuthPassword,
-			ApiKey:   config.ApiKey,
+			Username:    config.AuthUsername,
+			Password:    config.AuthPassword,
+			ApiKey:      config.ApiKey,
 			ApiRootPath: config.ApiRootPath,
 
 		}
 	} else {
 		auth = &ApiKeyAuth{
-			ApiKey: config.ApiKey,
+			ApiKey:      config.ApiKey,
 			ApiRootPath: config.ApiRootPath,
 		}
 	}
@@ -67,9 +67,9 @@ func (a *ApiKeyAuth) Auth(req *http.Request) error {
 }
 
 type BasicAuth struct {
-	Username string
-	Password string
-	ApiKey   string
+	Username    string
+	Password    string
+	ApiKey      string
 	ApiRootPath string
 }
 

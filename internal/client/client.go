@@ -14,9 +14,9 @@ import (
 
 // Client struct is an *Arr client.
 type Client struct {
-	httpClient http.Client
-	URL            url.URL
-	APIRootPath    string
+	httpClient  http.Client
+	URL         url.URL
+	APIRootPath string
 }
 
 type QueryParams = url.Values
@@ -36,7 +36,7 @@ func NewClient(baseURL string, insecureSkipVerify bool, auth Authenticator, apiR
 			},
 			Transport: NewExportarrTransport(BaseTransport(insecureSkipVerify), auth),
 		},
-		URL: *u,
+		URL:         *u,
 		APIRootPath: apiRoot,
 	}, nil
 }

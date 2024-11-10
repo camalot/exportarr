@@ -49,8 +49,8 @@ func TestCollect(t *testing.T) {
 	defer ts.Close()
 
 	config := &config.SabnzbdConfig{
-		URL:    ts.URL,
-		ApiKey: API_KEY,
+		URL:         ts.URL,
+		ApiKey:      API_KEY,
 		ApiRootPath: "/sabnzbd",
 	}
 	collector, err := NewSabnzbdCollector(config)
@@ -106,8 +106,8 @@ func TestCollect_WithCustomApiRootPath(t *testing.T) {
 	defer ts.Close()
 
 	config := &config.SabnzbdConfig{
-		URL:    ts.URL,
-		ApiKey: API_KEY,
+		URL:         ts.URL,
+		ApiKey:      API_KEY,
 		ApiRootPath: "/",
 	}
 	collector, err := NewSabnzbdCollector(config)
@@ -159,8 +159,8 @@ func TestCollect_FailureDoesntPanic(t *testing.T) {
 	defer ts.Close()
 
 	config := &config.SabnzbdConfig{
-		URL:    ts.URL,
-		ApiKey: API_KEY,
+		URL:         ts.URL,
+		ApiKey:      API_KEY,
 		ApiRootPath: "/sabnzbd",
 	}
 	collector, err := NewSabnzbdCollector(config)

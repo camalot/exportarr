@@ -215,7 +215,7 @@ var prowlarrCmd = &cobra.Command{
 
 var whisparrCmd = &cobra.Command{
 	Use:     "whisparr",
-	Aliases: []string{"w"},
+	Aliases: []string{"s"},
 	Short:   "Prometheus Exporter for Whisparr",
 	Long:    "Prometheus Exporter for Whisparr.",
 	RunE: func(cmd *cobra.Command, args []string) error {
@@ -226,7 +226,7 @@ var whisparrCmd = &cobra.Command{
 		c.ApiVersion = "v3"
 		UsageOnError(cmd, c.Validate())
 
-		serveHttp(func(r *prometheus.Registry) {
+		serveHttp(func(r prometheus.Registerer) {
 			r.MustRegister(
 				collector.NewWhisparrCollector(c),
 				collector.NewQueueCollector(c),
