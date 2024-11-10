@@ -16,20 +16,21 @@ type indexerCollector struct {
 	errorMetric   *prometheus.Desc  // Error Description for use with InvalidMetric
 }
 
-func NewIndexerCollector(c *config.ArrConfig) *indexerCollector {
+func NewIndexerCollector(conf *config.ArrConfig) *indexerCollector {
 	return &indexerCollector{
-		config: c,
+		config: conf,
 		indexerMetric: prometheus.NewDesc(
-			prometheus.BuildFQName("whisparr", "indexer", ""),
+			prometheus.BuildFQName(conf.App, "", "indexer"),
 			"Indexer Metrics. 0 = Disabled, RssEnabled = 1 | AutoSearchEnabled = 2 | InteractiveSearchEnabled = 3",
 			[]string{"protocol", "name", "priority", "implementation"},
-			prometheus.Labels{"url": c.URL},
+			prometheus.Labels{"url": conf.URL},
 		),
+
 		errorMetric: prometheus.NewDesc(
-			prometheus.BuildFQName("whisparr", "indexer", "collector_error"),
+			prometheus.BuildFQName(conf.App, "indexer", "collector_error"),
 			"Error while collecting metrics",
 			nil,
-			prometheus.Labels{"url": c.URL},
+			prometheus.Labels{"url": conf.URL},
 		),
 	}
 }
@@ -59,13 +60,13 @@ func (collector *indexerCollector) Collect(ch chan<- prometheus.Metric) {
 		for _, indexer := range indexers {
 			status := 0
 			if indexer.EnableRss {
-				status &= 1
+				status += 1
 			}
 			if indexer.EnableAutomaticSearch {
-				status &= 2
+				status += 2
 			}
 			if indexer.EnableInteractiveSearch {
-				status &= 3
+				status += 3
 			}
 			ch <- prometheus.MustNewConstMetric(
 				collector.indexerMetric,
