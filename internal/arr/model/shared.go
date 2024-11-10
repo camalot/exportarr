@@ -52,6 +52,16 @@ type SystemHealthMessage struct {
 	WikiURL string `json:"wikiUrl"`
 }
 
+type DownloadClient []struct {
+	Name                     string `json:"name"`
+	Protocol                 string `json:"protocol"`
+	Enable                   bool   `json:"enable"`
+	Priority                 int    `json:"priority"`
+	RemoveCompletedDownloads bool   `json:"removeCompletedDownloads"`
+	RemoveFailedDownloads    bool   `json:"removeFailedDownloads"`
+	Implementation           string `json:"implementation"`
+}
+
 type ArrIndexer []struct {
 	Name                    string `json:"name"`
 	EnableRss               bool   `json:"enableRss"`
@@ -69,4 +79,39 @@ type ArrIndexer []struct {
 	// 	// must be typecast at the call site.
 	// 	Value interface{} `json:"value"`
 	// } `json:"fields"`
+}
+
+/*
+ "version": "2.0.0.548",
+	"branch": "nightly",
+	"releaseDate": "2024-04-09T03:02:26Z",
+	"fileName": "Whisparr.develop.2.0.0.548.linux-musl-core-x64.tar.gz",
+	"url": "https://dev.azure.com/Servarr/Whisparr/_apis/build/builds/3206/artifacts?artifactName=Packages&fileId=9A9838C750E18D5725BF557A516789D490BB1A12BFCB46DCB589BB61174D0BC002&fileName=Whisparr.develop.2.0.0.548.linux-musl-core-x64.tar.gz&api-version=5.1",
+	"installed": true,
+	"installedOn": "2024-05-27T21:35:29Z",
+	"installable": false,
+	"latest": true,
+	"changes": {
+			"new": [],
+			"fixed": [
+					"New TPDB domain"
+			]
+	},
+	"hash": "1073e3854e5eaad09890a5b060c8037700b0c24d46054e61818ea7e5348a7b52"
+*/
+
+type Update []struct {
+	Version      string `json:"version"`
+	Branch       string `json:"branch"`
+	ReleaseDate  string `json:"releaseDate"`
+	Installed    bool   `json:"installed"`
+	Latest       bool   `json:"latest"`
+	Hash         string `json:"hash"`
+}
+
+type DiskSpace []struct {
+	Path      string `json:"path"`
+	Label     string `json:"label"`
+	FreeSpace int64  `json:"freeSpace"`
+	TotalSpace int64  `json:"totalSpace"`
 }
