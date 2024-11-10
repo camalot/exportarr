@@ -234,7 +234,7 @@ var whisparrCmd = &cobra.Command{
 				collector.NewRootFolderCollector(c),
 				collector.NewSystemStatusCollector(c),
 				collector.NewSystemHealthCollector(c),
-				// collector.NewIndexerCollector(c),
+				collector.NewIndexerCollector(c),
 			)
 		})
 		return nil
