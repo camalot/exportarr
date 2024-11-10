@@ -16,11 +16,17 @@ inputs:
     type: boolean
     required: false
     default: true
+  branch:
+    description: use branch as tag
+    type: boolean
+    required: false
+    default: false
 
 runs:
   using: composite
   steps:
     - name: Docker meta
+      if: inputs.branch == 'false'
       id: meta
       uses: docker/metadata-action@v5
       with:
@@ -32,6 +38,23 @@ runs:
           type=semver,pattern={{version}},prefix=v
           type=semver,pattern={{major}}.{{minor}},prefix=v
           type=semver,pattern={{major}},prefix=v
+
+    - name: Docker meta
+      if: inputs.beta == 'true'
+      id: meta
+      uses: docker/metadata-action@v5
+      with:
+        images: ghcr.io/${{ github.repository }}
+        flavor: |
+          latest=false
+          prefix=
+          suffix=-{{github.ref}}
+        tags: |
+          type=raw,value=beta,enable=true
+          type=ref,event=branch
+          type=semver,pattern={{version}}
+          type=semver,pattern={{major}}.{{minor}}
+          type=semver,pattern={{major}}
 
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v3
