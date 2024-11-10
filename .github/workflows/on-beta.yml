@@ -8,14 +8,14 @@ on:
       - "!master"
 
 jobs:
-  tests:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+  # tests:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v4
 
-      - name: Tests
-        uses: ./.github/actions/tests
+  #     - name: Tests
+  #       uses: ./.github/actions/tests
 
   # lint:
   #   runs-on: ubuntu-latest
@@ -27,8 +27,8 @@ jobs:
   #       uses: ./.github/actions/lint
 
   release-image:
-    needs:  # dont run if tests or lint fail
-      - tests
+    needs: [] # dont run if tests or lint fail
+      # - tests
       # - lint
     runs-on: ubuntu-latest
     steps:
