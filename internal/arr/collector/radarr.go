@@ -10,6 +10,7 @@ import (
 
 type radarrCollector struct {
 	config                 *config.ArrConfig // App configuration
+	movieEdition           *prometheus.Desc  // Total number of movies with an `edition` set
 	movieMetric            *prometheus.Desc  // Total number of movies
 	movieDownloadedMetric  *prometheus.Desc  // Total number of downloaded movies
 	movieMonitoredMetric   *prometheus.Desc  // Total number of monitored movies
@@ -25,6 +26,12 @@ type radarrCollector struct {
 func NewRadarrCollector(c *config.ArrConfig) *radarrCollector {
 	return &radarrCollector{
 		config: c,
+		movieEdition: prometheus.NewDesc(
+			"radarr_movie_editions",
+			"Total number of movies with `edition` set",
+			nil,
+			prometheus.Labels{"url": c.URL},
+		),
 		movieMetric: prometheus.NewDesc(
 			"radarr_movie_total",
 			"Total number of movies",
@@ -89,6 +96,7 @@ func NewRadarrCollector(c *config.ArrConfig) *radarrCollector {
 }
 
 func (collector *radarrCollector) Describe(ch chan<- *prometheus.Desc) {
+	ch <- collector.movieEdition
 	ch <- collector.movieMetric
 	ch <- collector.movieDownloadedMetric
 	ch <- collector.movieMonitoredMetric
@@ -97,6 +105,7 @@ func (collector *radarrCollector) Describe(ch chan<- *prometheus.Desc) {
 	ch <- collector.movieMissingMetric
 	ch <- collector.movieFileSizeMetric
 	ch <- collector.movieQualitiesMetric
+	ch <- collector.movieTagsMetric
 }
 
 func (collector *radarrCollector) Collect(ch chan<- prometheus.Metric) {
@@ -109,20 +118,25 @@ func (collector *radarrCollector) Collect(ch chan<- prometheus.Metric) {
 	}
 	var fileSize int64
 	var (
+		editions    = 0
 		downloaded  = 0
 		monitored   = 0
 		unmonitored = 0
 		missing     = 0
 		wanted      = 0
 		qualities   = map[string]int{}
-		tags   =	[]struct {
-			Label string
+		tags        = []struct {
+			Label  string
 			Movies int
 		}{}
 	)
+
 	movies := model.Movie{}
+	params := client.QueryParams{}
+	params.Add("excludeLocalCovers", "true")
+
 	// https://radarr.video/docs/api/#/Movie/get_api_v3_movie
-	if err := c.DoRequest("movie", &movies); err != nil {
+	if err := c.DoRequest("movie", &movies, params); err != nil {
 		log.Errorw("Error getting movies", "error", err)
 		ch <- prometheus.NewInvalidMetric(collector.errorMetric, err)
 		return
@@ -148,28 +162,31 @@ func (collector *radarrCollector) Collect(ch chan<- prometheus.Metric) {
 		if s.MovieFile.Size != 0 {
 			fileSize += s.MovieFile.Size
 		}
+
+		if s.MovieFile.Edition != "" {
+			editions++
+		}
 	}
 
 	tagObjects := model.TagMovies{}
 	// https://radarr.video/docs/api/#/TagDetails/get_api_v3_tag_detail
 	if err := c.DoRequest("tag/detail", &tagObjects); err != nil {
-			log.Errorw("Error getting Tags", "error", err)
-			ch <- prometheus.NewInvalidMetric(collector.errorMetric, err)
-			return
-		}
+		log.Errorw("Error getting Tags", "error", err)
+		ch <- prometheus.NewInvalidMetric(collector.errorMetric, err)
+		return
+	}
 	for _, s := range tagObjects {
 		tag := struct {
-			Label string
+			Label  string
 			Movies int
 		}{
-			Label: s.Label,
+			Label:  s.Label,
 			Movies: len(s.MovieIds),
 		}
 		tags = append(tags, tag)
 	}
-	
 
-
+	ch <- prometheus.MustNewConstMetric(collector.movieEdition, prometheus.GaugeValue, float64(editions))
 	ch <- prometheus.MustNewConstMetric(collector.movieMetric, prometheus.GaugeValue, float64(len(movies)))
 	ch <- prometheus.MustNewConstMetric(collector.movieDownloadedMetric, prometheus.GaugeValue, float64(downloaded))
 	ch <- prometheus.MustNewConstMetric(collector.movieMonitoredMetric, prometheus.GaugeValue, float64(monitored))

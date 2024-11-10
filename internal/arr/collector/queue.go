@@ -48,14 +48,19 @@ func (collector *queueCollector) Collect(ch chan<- prometheus.Metric) {
 		return
 	}
 
-	params := map[string]string{"page": "1"}
+	params := client.QueryParams{}
+	params.Add("page", "1")
 	if collector.config.EnableUnknownQueueItems {
 		if collector.config.App == "sonarr" {
-			params["includeUnknownSeriesItems"] = "true"
+			params.Add("includeUnknownSeriesItems", "true")
 		} else if collector.config.App == "radarr" {
+<<<<<<< HEAD
 			params["includeUnknownMovieItems"] = "true"
 		} else if collector.config.App == "whisparr" {
 			params["includeUnknownSeriesItems"] = "true"
+=======
+			params.Add("includeUnknownMovieItems", "true")
+>>>>>>> master
 		}
 	}
 
@@ -73,7 +78,7 @@ func (collector *queueCollector) Collect(ch chan<- prometheus.Metric) {
 	queueStatusAll = append(queueStatusAll, queue.Records...)
 	if totalPages > 1 {
 		for page := 2; page <= totalPages; page++ {
-			params["page"] = fmt.Sprintf("%d", page)
+			params.Set("page", fmt.Sprintf("%d", page))
 			if err := c.DoRequest("queue", &queue, params); err != nil {
 				log.Errorw("Error getting queue page",
 					"page", page,

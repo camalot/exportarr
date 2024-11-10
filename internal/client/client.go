@@ -19,6 +19,8 @@ type Client struct {
 	APIRootPath    string
 }
 
+type QueryParams = url.Values
+
 // NewClient method initializes a new *Arr client.
 func NewClient(baseURL string, insecureSkipVerify bool, auth Authenticator, apiRoot string) (*Client, error) {
 
@@ -64,11 +66,15 @@ func (c *Client) unmarshalBody(b io.Reader, target interface{}) (err error) {
 }
 
 // DoRequest - Take a HTTP Request and return Unmarshaled data
-func (c *Client) DoRequest(endpoint string, target interface{}, queryParams ...map[string]string) error {
+func (c *Client) DoRequest(endpoint string, target interface{}, queryParams ...QueryParams) error {
 	values := c.URL.Query()
+
+	// merge all query params
 	for _, m := range queryParams {
-		for k, v := range m {
-			values.Add(k, v)
+		for key, vals := range m {
+			for _, val := range vals {
+				values.Add(key, val)
+			}
 		}
 	}
 	url := c.URL.JoinPath(c.APIRootPath, endpoint)

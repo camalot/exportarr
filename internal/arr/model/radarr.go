@@ -7,7 +7,8 @@ type Movie []struct {
 	Available bool   `json:"isAvailable"`
 	Monitored bool   `json:"monitored"`
 	MovieFile struct {
-		Size    int64 `json:"size"`
+		Edition string `json:"edition"`
+		Size    int64  `json:"size"`
 		Quality struct {
 			Quality struct {
 				Name string `json:"name"`
@@ -18,7 +19,7 @@ type Movie []struct {
 }
 
 type TagMovies []struct {
-	ID	int	`json:"id"`
-	Label string `json:"label"`
-	MovieIds []int `json:"movieIds"`
+	ID       int    `json:"id"`
+	Label    string `json:"label"`
+	MovieIds []int  `json:"movieIds"`
 }
