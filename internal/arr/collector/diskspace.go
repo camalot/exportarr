@@ -1,8 +1,6 @@
 package collector
 
 import (
-	"strconv"
-
 	"github.com/onedr0p/exportarr/internal/arr/client"
 	"github.com/onedr0p/exportarr/internal/arr/config"
 	"github.com/onedr0p/exportarr/internal/arr/model"
@@ -11,10 +9,10 @@ import (
 )
 
 type diskspaceCollector struct {
-	config           *config.ArrConfig   // App configuration
-	freeSpaceMetric  *prometheus.Desc  // 
+	config           *config.ArrConfig // App configuration
+	freeSpaceMetric  *prometheus.Desc  //
 	totalSpaceMetric *prometheus.Desc  //
-	errorMetric      *prometheus.Desc    // Error Description for use with InvalidMetric
+	errorMetric      *prometheus.Desc  // Error Description for use with InvalidMetric
 }
 
 func NewDiskSpaceCollector(conf *config.ArrConfig) *diskspaceCollector {

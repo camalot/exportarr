@@ -115,3 +115,7 @@ type DiskSpace []struct {
 	FreeSpace int64  `json:"freeSpace"`
 	TotalSpace int64  `json:"totalSpace"`
 }
+
+type BlockList struct {
+	TotalRecords int `json:"totalRecords"`
+}

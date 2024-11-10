@@ -68,6 +68,7 @@ var radarrCmd = &cobra.Command{
 				collector.NewDownloadClientCollector(c),
 				collector.NewUpdateCollector(c),
 				collector.NewDiskSpaceCollector(c),
+				collector.NewBlocklistCollector(c),
 			)
 		})
 		return nil
@@ -99,6 +100,7 @@ var sonarrCmd = &cobra.Command{
 				collector.NewDownloadClientCollector(c),
 				collector.NewUpdateCollector(c),
 				collector.NewDiskSpaceCollector(c),
+				collector.NewBlocklistCollector(c),
 			)
 		})
 		return nil
@@ -129,6 +131,7 @@ var lidarrCmd = &cobra.Command{
 				collector.NewDownloadClientCollector(c),
 				collector.NewUpdateCollector(c),
 				collector.NewDiskSpaceCollector(c),
+				collector.NewBlocklistCollector(c),
 			)
 		})
 		return nil
@@ -160,6 +163,8 @@ var readarrCmd = &cobra.Command{
 				collector.NewDownloadClientCollector(c),
 				collector.NewUpdateCollector(c),
 				collector.NewDiskSpaceCollector(c),
+				// unsure if this is supported
+				// collector.NewBlocklistCollector(c),
 			)
 		})
 		return nil
@@ -250,6 +255,8 @@ var whisparrCmd = &cobra.Command{
 				collector.NewDownloadClientCollector(c),
 				collector.NewUpdateCollector(c),
 				collector.NewDiskSpaceCollector(c),
+				// this is NOT supported by Whisparr
+				// collector.NewBlocklistCollector(c),
 			)
 		})
 		return nil
