@@ -27,6 +27,9 @@ jobs:
         uses: ./.github/actions/lint
 
   release-image:
+    needs:  # dont run if tests or lint fail
+      - tests
+      - lint
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
