@@ -1,7 +1,12 @@
-FROM golang:1.20.4-alpine as builder
+FROM golang:1.23.3-alpine as builder
 ARG TARGETOS
 ARG TARGETARCH
 ARG TARGETVARIANT=""
+
+ARG VERSION="development"
+ARG BUILDTIME=""
+ARG REVISION=""
+
 ENV GO111MODULE=on \
     CGO_ENABLED=0 \
     GOOS=${TARGETOS} \
@@ -11,7 +16,7 @@ RUN apk add --no-cache ca-certificates tini-static \
     && update-ca-certificates
 WORKDIR /build
 COPY . .
-RUN go build -a -tags netgo -ldflags '-w -extldflags "-static"' -o exportarr /build/cmd/exportarr/.
+RUN go build -a -tags netgo -ldflags "-w -extldflags '-static' -X main.version=${VERSION} -X main.buildTime=${BUILDTIME} -X main.revision=${REVISION}" -o exportarr /build/cmd/exportarr/.
 
 FROM gcr.io/distroless/static:nonroot
 ENV PORT="9707"

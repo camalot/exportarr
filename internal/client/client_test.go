@@ -27,7 +27,7 @@ func TestDoRequest(t *testing.T) {
 	parameters := []struct {
 		name        string
 		endpoint    string
-		queryParams map[string]string
+		queryParams QueryParams
 		expectedURL string
 	}{
 		{
@@ -38,11 +38,20 @@ func TestDoRequest(t *testing.T) {
 		{
 			name:     "params",
 			endpoint: "test",
-			queryParams: map[string]string{
-				"page":      "1",
-				"testParam": "asdf",
+			queryParams: QueryParams{
+				"page":      {"1"},
+				"testParam": {"asdf"},
 			},
 			expectedURL: "/test?page=1&testParam=asdf",
+		},
+		{
+			name:     "csv params",
+			endpoint: "test",
+			queryParams: QueryParams{
+				"ids[]":     {"1", "2", "1234"},
+				"testParam": {"asdf"},
+			},
+			expectedURL: "/test?ids%5B%5D=1&ids%5B%5D=2&ids%5B%5D=1234&testParam=asdf",
 		},
 	}
 	for _, param := range parameters {
@@ -86,7 +95,6 @@ func TestDoRequest_PanicRecovery(t *testing.T) {
 		require.NoError(err)
 		w.Write(s)
 		w.WriteHeader(http.StatusOK)
-		return
 	}))
 	defer ts.Close()
 

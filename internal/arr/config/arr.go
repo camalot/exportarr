@@ -32,7 +32,7 @@ func RegisterArrFlags(flags *flag.FlagSet) {
 
 type ArrConfig struct {
 	App                     string         `koanf:"app"`
-	ApiVersion              string         `koanf:"api-version" validate:"required|in:v1,v3"`
+	ApiVersion              string         `koanf:"api-version"`
 	XMLConfig               string         `koanf:"config"`
 	AuthUsername            string         `koanf:"auth-username"`
 	AuthPassword            string         `koanf:"auth-password"`
@@ -44,6 +44,7 @@ type ArrConfig struct {
 	ApiRootPath             string         `koanf:"api-root-path"`                                      // stores the API root path
 	DisableSSLVerify        bool           `koanf:"disable-ssl-verify"`                                 // stores the disable SSL verify flag
 	Prowlarr                ProwlarrConfig `koanf:"prowlarr"`
+	Bazarr                  BazarrConfig   `koanf:"bazarr"`
 	k                       *koanf.Koanf
 }
 
@@ -131,7 +132,7 @@ func (c *ArrConfig) Validate() error {
 
 func (c ArrConfig) Messages() map[string]string {
 	return validate.MS{
-		"ApiKey.regex":              "api-key must be a 32 character hex string",
+		"ApiKey.regex":              "api-key must be a 20-32 character alphanumeric string",
 		"LogLevel.ValidateLogLevel": "log-level must be one of: debug, info, warn, error, dpanic, panic, fatal",
 	}
 }

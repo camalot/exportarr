@@ -3,7 +3,6 @@ package model
 import (
 	"encoding/json"
 	"fmt"
-	"reflect"
 	"sort"
 	"strconv"
 	"strings"
@@ -167,6 +166,10 @@ func (q *QueueStats) UnmarshalJSON(data []byte) error {
 
 // latestStat gets the most recent date's value from a map of dates to values
 func latestStat(m map[string]int) (string, int) {
+	if len(m) == 0 {
+		return "", 0
+	}
+
 	keys := make([]string, 0, len(m))
 	for k := range m {
 		keys = append(keys, k)
@@ -176,10 +179,6 @@ func latestStat(m map[string]int) (string, int) {
 	key := keys[len(keys)-1]
 
 	return key, m[key]
-}
-
-func monadCast(i interface{}, t reflect.Type) {
-
 }
 
 // parseFloat is a monad version of strconv.ParseFloat

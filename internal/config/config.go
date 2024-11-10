@@ -81,7 +81,9 @@ func LoadConfig(flags *flag.FlagSet) (*Config, error) {
 			return nil, fmt.Errorf("Couldn't Read API Key file %w", err)
 		}
 
-		k.Set("api-key", string(data))
+		if err := k.Set("api-key", string(data)); err != nil {
+			return nil, fmt.Errorf("Couldn't merge api-key into config: %w", err)
+		}
 	}
 
 	var out Config
@@ -112,7 +114,7 @@ func (c *Config) Validate() error {
 
 func (c Config) Messages() map[string]string {
 	return validate.MS{
-		"ApiKey.regex":              "api-key must be a 32 character hex string",
+		"ApiKey.regex":              "api-key must be a 20-32 character alphanumeric string",
 		"LogLevel.ValidateLogLevel": "log-level must be one of: debug, info, warn, error, dpanic, panic, fatal",
 	}
 }

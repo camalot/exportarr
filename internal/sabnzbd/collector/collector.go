@@ -187,7 +187,9 @@ func NewSabnzbdCollector(config *config.SabnzbdConfig) (*SabnzbdCollector, error
 }
 
 func (s *SabnzbdCollector) doRequest(mode string, target interface{}) error {
-	return s.client.DoRequest("/api", target, map[string]string{"mode": mode})
+	params := client.QueryParams{}
+	params.Add("mode", mode)
+	return s.client.DoRequest("/api", target, params)
 }
 
 func (s *SabnzbdCollector) getQueueStats() (*model.QueueStats, error) {
@@ -274,9 +276,7 @@ func (e *SabnzbdCollector) Collect(ch chan<- prometheus.Metric) {
 			return fmt.Errorf("failed to get server stats: %w", err)
 		}
 
-		e.cache.Update(*serverStats)
-
-		return nil
+		return e.cache.Update(*serverStats)
 	})
 
 	if err := g.Wait(); err != nil {
