@@ -26,13 +26,15 @@ func NewSystemHealthCollector(c *config.ArrConfig, emitters ...ExtraHealthMetric
 	return &systemHealthCollector{
 		config: c,
 		systemHealthMetric: prometheus.NewDesc(
-			fmt.Sprintf("%s_system_health_issues", c.App),
+			prometheus.BuildFQName(c.App, "system", "health_issues"),
+			// fmt.Sprintf("%s_system_health_issues", c.App),
 			"Total number of health issues by source, type, message and wikiurl",
 			[]string{"source", "type", "message", "wikiurl"},
 			prometheus.Labels{"url": c.URL},
 		),
 		errorMetric: prometheus.NewDesc(
-			fmt.Sprintf("%s_health_collector_error", c.App),
+			prometheus.BuildFQName(c.App, "health", "collector_error"),
+			//fmt.Sprintf("%s_health_collector_error", c.App),
 			"Error while collecting metrics",
 			nil,
 			prometheus.Labels{"url": c.URL},

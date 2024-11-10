@@ -11,10 +11,6 @@ import (
 	"go.uber.org/zap"
 )
 
-const (
-	whisparr_namespace = "whisparr"
-)
-
 type whisparrCollector struct {
 	config                   *config.ArrConfig // App configuration
 	seriesMetric             *prometheus.Desc  // Total number of series
@@ -39,97 +35,97 @@ func NewWhisparrCollector(conf *config.ArrConfig) *whisparrCollector {
 	return &whisparrCollector{
 		config: conf,
 		seriesMetric: prometheus.NewDesc(
-			prometheus.BuildFQName(whisparr_namespace, "series", "total"),
+			prometheus.BuildFQName(conf.App, "series", "total"),
 			"Total number of series",
 			[]string{},
 			prometheus.Labels{"url": conf.URL},
 		),
 		seriesDownloadedMetric: prometheus.NewDesc(
-			prometheus.BuildFQName(whisparr_namespace, "series", "downloaded_total"),
+			prometheus.BuildFQName(conf.App, "series", "downloaded_total"),
 			"Total number of downloaded series",
 			[]string{},
 			prometheus.Labels{"url": conf.URL},
 		),
 		seriesMonitoredMetric: prometheus.NewDesc(
-			prometheus.BuildFQName(whisparr_namespace, "series", "monitored_total"),
+			prometheus.BuildFQName(conf.App, "series", "monitored_total"),
 			"Total number of monitored series",
 			[]string{},
 			prometheus.Labels{"url": conf.URL},
 		),
 		seriesUnmonitoredMetric: prometheus.NewDesc(
-			prometheus.BuildFQName(whisparr_namespace, "series", "unmonitored_total"),
+			prometheus.BuildFQName(conf.App, "series", "unmonitored_total"),
 			"Total number of unmonitored series",
 			[]string{},
 			prometheus.Labels{"url": conf.URL},
 		),
 		seriesFileSizeMetric: prometheus.NewDesc(
-			prometheus.BuildFQName(whisparr_namespace, "series", "filesize_bytes"),
+			prometheus.BuildFQName(conf.App, "series", "filesize_bytes"),
 			"Total fizesize of all series in bytes",
 			[]string{},
 			prometheus.Labels{"url": conf.URL},
 		),
 		seasonMetric: prometheus.NewDesc(
-			prometheus.BuildFQName(whisparr_namespace, "season", "total"),
+			prometheus.BuildFQName(conf.App, "season", "total"),
 			"Total number of seasons",
 			[]string{},
 			prometheus.Labels{"url": conf.URL},
 		),
 		seasonDownloadedMetric: prometheus.NewDesc(
-			prometheus.BuildFQName(whisparr_namespace, "season", "downloaded_total"),
+			prometheus.BuildFQName(conf.App, "season", "downloaded_total"),
 			"Total number of downloaded seasons",
 			[]string{},
 			prometheus.Labels{"url": conf.URL},
 		),
 		seasonMonitoredMetric: prometheus.NewDesc(
-			prometheus.BuildFQName(whisparr_namespace, "season", "monitored_total"),
+			prometheus.BuildFQName(conf.App, "season", "monitored_total"),
 			"Total number of monitored seasons",
 			[]string{},
 			prometheus.Labels{"url": conf.URL},
 		),
 		seasonUnmonitoredMetric: prometheus.NewDesc(
-			prometheus.BuildFQName(whisparr_namespace, "season", "unmonitored_total"),
+			prometheus.BuildFQName(conf.App, "season", "unmonitored_total"),
 			"Total number of unmonitored seasons",
 			[]string{},
 			prometheus.Labels{"url": conf.URL},
 		),
 		episodeMetric: prometheus.NewDesc(
-			prometheus.BuildFQName(whisparr_namespace, "episode", "total"),
+			prometheus.BuildFQName(conf.App, "episode", "total"),
 			"Total number of episodes",
 			[]string{},
 			prometheus.Labels{"url": conf.URL},
 		),
 		episodeMonitoredMetric: prometheus.NewDesc(
-			prometheus.BuildFQName(whisparr_namespace, "episode", "monitored_total"),
+			prometheus.BuildFQName(conf.App, "episode", "monitored_total"),
 			"Total number of monitored episodes",
 			[]string{},
 			prometheus.Labels{"url": conf.URL},
 		),
 		episodeUnmonitoredMetric: prometheus.NewDesc(
-			prometheus.BuildFQName(whisparr_namespace, "episode", "unmonitored_total"),
+			prometheus.BuildFQName(conf.App, "episode", "unmonitored_total"),
 			"Total number of unmonitored episodes",
 			[]string{},
 			prometheus.Labels{"url": conf.URL},
 		),
 		episodeDownloadedMetric: prometheus.NewDesc(
-			prometheus.BuildFQName(whisparr_namespace, "episode", "downloaded_total"),
+			prometheus.BuildFQName(conf.App, "episode", "downloaded_total"),
 			"Total number of downloaded episodes",
 			[]string{},
 			prometheus.Labels{"url": conf.URL},
 		),
 		episodeMissingMetric: prometheus.NewDesc(
-			prometheus.BuildFQName(whisparr_namespace, "episode", "missing_total"),
+			prometheus.BuildFQName(conf.App, "episode", "missing_total"),
 			"Total number of missing episodes",
 			[]string{},
 			prometheus.Labels{"url": conf.URL},
 		),
 		episodeQualitiesMetric: prometheus.NewDesc(
-			prometheus.BuildFQName(whisparr_namespace, "episode", "quality_total"),
+			prometheus.BuildFQName(conf.App, "episode", "quality_total"),
 			"Total number of downloaded episodes by quality",
 			[]string{"quality"},
 			prometheus.Labels{"url": conf.URL},
 		),
 		errorMetric: prometheus.NewDesc(
-			prometheus.BuildFQName(whisparr_namespace, "collector", "error"),
+			prometheus.BuildFQName(conf.App, "collector", "error"),
 			"Error while collecting metrics",
 			[]string{},
 			prometheus.Labels{"url": conf.URL},
@@ -223,7 +219,8 @@ func (collector *whisparrCollector) Collect(ch chan<- prometheus.Metric) {
 		if collector.config.EnableAdditionalMetrics {
 			textra := time.Now()
 			episodeFile := model.EpisodeFile{}
-			params := map[string]string{"seriesId": fmt.Sprintf("%d", s.Id)}
+			params := client.QueryParams{}
+			params.Add("seriesId", fmt.Sprintf("%d", s.Id))
 			if err := c.DoRequest("episodefile", &episodeFile, params); err != nil {
 				log.Errorw("Error getting episodefile",
 					"error", err)
@@ -261,7 +258,8 @@ func (collector *whisparrCollector) Collect(ch chan<- prometheus.Metric) {
 	}
 
 	episodesMissing := model.Missing{}
-	params := map[string]string{"sortKey": "airDateUtc"}
+	params := client.QueryParams{}
+	params.Add("sortKey", "airDateUtc")
 	if err := c.DoRequest("wanted/missing", &episodesMissing, params); err != nil {
 		log.Errorw("Error getting missing",
 			"error", err)

@@ -54,13 +54,9 @@ func (collector *queueCollector) Collect(ch chan<- prometheus.Metric) {
 		if collector.config.App == "sonarr" {
 			params.Add("includeUnknownSeriesItems", "true")
 		} else if collector.config.App == "radarr" {
-<<<<<<< HEAD
-			params["includeUnknownMovieItems"] = "true"
-		} else if collector.config.App == "whisparr" {
-			params["includeUnknownSeriesItems"] = "true"
-=======
 			params.Add("includeUnknownMovieItems", "true")
->>>>>>> master
+		} else if collector.config.App == "whisparr" {
+			params.Add("includeUnknownSeriesItems", "true")
 		}
 	}
 

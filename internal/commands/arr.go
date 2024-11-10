@@ -17,11 +17,8 @@ func init() {
 	config.RegisterArrFlags(lidarrCmd.PersistentFlags())
 	config.RegisterArrFlags(readarrCmd.PersistentFlags())
 	config.RegisterArrFlags(prowlarrCmd.PersistentFlags())
-<<<<<<< HEAD
 	config.RegisterArrFlags(whisparrCmd.PersistentFlags())
-=======
 	config.RegisterArrFlags(bazarrCmd.PersistentFlags())
->>>>>>> master
 	config.RegisterProwlarrFlags(prowlarrCmd.PersistentFlags())
 	config.RegisterBazarrFlags(bazarrCmd.PersistentFlags())
 
