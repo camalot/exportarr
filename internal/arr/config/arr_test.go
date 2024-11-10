@@ -191,6 +191,7 @@ func TestValidate(t *testing.T) {
 			config: &ArrConfig{
 				URL:          "http://localhost",
 				ApiKey:       "abcdef0123456789abcdef0123456789",
+				ApiRootPath:  "/api",
 				ApiVersion:   "v3",
 				AuthUsername: "user",
 				AuthPassword: "pass",
@@ -202,6 +203,7 @@ func TestValidate(t *testing.T) {
 			config: &ArrConfig{
 				URL:          "http://localhost",
 				ApiKey:       "abcdef0123456789abcdef0123456789",
+				ApiRootPath:  "/api",
 				ApiVersion:   "v3",
 				AuthUsername: "user",
 				AuthPassword: "pass",
@@ -212,36 +214,40 @@ func TestValidate(t *testing.T) {
 		{
 			name: "good-api-key-32-len",
 			config: &ArrConfig{
-				URL:        "http://localhost",
-				ApiKey:     "abcdefABCDEF0123456789abcdef0123",
-				ApiVersion: "v3",
+				URL:         "http://localhost",
+				ApiKey:      "abcdefABCDEF0123456789abcdef0123",
+				ApiRootPath: "/api",
+				ApiVersion:  "v3",
 			},
 			valid: true,
 		},
 		{
 			name: "good-api-key-32-len",
 			config: &ArrConfig{
-				URL:        "http://localhost",
-				ApiKey:     "abcdefABCDEF01234567",
-				ApiVersion: "v3",
+				URL:         "http://localhost",
+				ApiKey:      "abcdefABCDEF01234567",
+				ApiRootPath: "/api",
+				ApiVersion:  "v3",
 			},
 			valid: true,
 		},
 		{
 			name: "bad-api-key",
 			config: &ArrConfig{
-				URL:        "http://localhost",
-				ApiKey:     "abcdef0123456789abc",
-				ApiVersion: "v3",
+				URL:         "http://localhost",
+				ApiKey:      "abcdef0123456789abc",
+				ApiRootPath: "/api",
+				ApiVersion:  "v3",
 			},
 			valid: false,
 		},
 		{
 			name: "no-api-version",
 			config: &ArrConfig{
-				URL:        "http://localhost",
-				ApiKey:     "abcdef0123456789abcdef0123456789",
-				ApiVersion: "",
+				URL:         "http://localhost",
+				ApiKey:      "abcdef0123456789abcdef0123456789",
+				ApiRootPath: "/api",
+				ApiVersion:  "",
 			},
 			valid: true,
 		},
@@ -250,6 +256,7 @@ func TestValidate(t *testing.T) {
 			config: &ArrConfig{
 				URL:          "http://localhost",
 				ApiKey:       "abcdef0123456789abcdef0123456789",
+				ApiRootPath:  "/api",
 				ApiVersion:   "v3",
 				AuthPassword: "password",
 			},
@@ -260,6 +267,7 @@ func TestValidate(t *testing.T) {
 			config: &ArrConfig{
 				URL:          "http://localhost",
 				ApiKey:       "abcdef0123456789abcdef0123456789",
+				ApiRootPath:  "/api",
 				ApiVersion:   "v3",
 				AuthUsername: "username",
 			},
@@ -268,10 +276,11 @@ func TestValidate(t *testing.T) {
 		{
 			name: "form-auth-needs-user-and-password",
 			config: &ArrConfig{
-				URL:        "http://localhost",
-				ApiKey:     "abcdef0123456789abcdef0123456789",
-				ApiVersion: "v3",
-				FormAuth:   true,
+				URL:         "http://localhost",
+				ApiKey:      "abcdef0123456789abcdef0123456789",
+				ApiRootPath: "/api",
+				ApiVersion:  "v3",
+				FormAuth:    true,
 			},
 			valid: false,
 		},
