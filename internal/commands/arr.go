@@ -59,6 +59,7 @@ var radarrCmd = &cobra.Command{
 				collector.NewRootFolderCollector(c),
 				collector.NewSystemStatusCollector(c),
 				collector.NewSystemHealthCollector(c),
+				collector.NewIndexerCollector(c),
 			)
 		})
 		return nil
@@ -86,6 +87,7 @@ var sonarrCmd = &cobra.Command{
 				collector.NewRootFolderCollector(c),
 				collector.NewSystemStatusCollector(c),
 				collector.NewSystemHealthCollector(c),
+				collector.NewIndexerCollector(c),
 			)
 		})
 		return nil
@@ -112,6 +114,7 @@ var lidarrCmd = &cobra.Command{
 				collector.NewRootFolderCollector(c),
 				collector.NewSystemStatusCollector(c),
 				collector.NewSystemHealthCollector(c),
+				collector.NewIndexerCollector(c),
 			)
 		})
 		return nil
@@ -139,6 +142,7 @@ var readarrCmd = &cobra.Command{
 				collector.NewRootFolderCollector(c),
 				collector.NewSystemStatusCollector(c),
 				collector.NewSystemHealthCollector(c),
+				collector.NewIndexerCollector(c),
 			)
 		})
 		return nil
@@ -197,6 +201,7 @@ var whisparrCmd = &cobra.Command{
 				collector.NewRootFolderCollector(c),
 				collector.NewSystemStatusCollector(c),
 				collector.NewSystemHealthCollector(c),
+				collector.NewIndexerCollector(c),
 			)
 		})
 		return nil

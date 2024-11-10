@@ -51,3 +51,23 @@ type SystemHealthMessage struct {
 	Message string `json:"message"`
 	WikiURL string `json:"wikiUrl"`
 }
+
+
+type ArrIndexer []struct {
+	Name                    string `json:"name"`
+	EnableRss               bool `json:"enableRss"`
+	EnableAutomaticSearch   bool `json:"enableAutomaticSearch"`
+	EnableInteractiveSearch bool `json:"enableInteractiveSearch"`
+	SupportsRss             bool `json:"supportsRss"`
+	SupportsSearch          bool `json:"supportsSearch"`
+	Protocol                string `json:"protocol"`
+	Implementation          string `json:"implementation"`
+	Priority                int `json:"priority"`
+
+	// Fields   []struct {
+	// 	Name string `json:"name"`
+	// 	// Value has multiple types, depending on the field, so it
+	// 	// must be typecast at the call site.
+	// 	Value interface{} `json:"value"`
+	// } `json:"fields"`
+}
