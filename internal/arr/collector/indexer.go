@@ -20,13 +20,13 @@ func NewIndexerCollector(c *config.ArrConfig) *indexerCollector {
 	return &indexerCollector{
 		config: c,
 		indexerMetric: prometheus.NewDesc(
-			prometheus.BuildFQName(c.App, "indexer", ""),
+			prometheus.BuildFQName("whisparr", "indexer", ""),
 			"Indexer Metrics. 0 = Disabled, RssEnabled = 1 | AutoSearchEnabled = 2 | InteractiveSearchEnabled = 3",
 			[]string{"protocol", "name", "priority", "implementation"},
 			prometheus.Labels{"url": c.URL},
 		),
 		errorMetric: prometheus.NewDesc(
-			prometheus.BuildFQName(c.App, "indexer", "collector_error"),
+			prometheus.BuildFQName("whisparr", "indexer", "collector_error"),
 			"Error while collecting metrics",
 			nil,
 			prometheus.Labels{"url": c.URL},
