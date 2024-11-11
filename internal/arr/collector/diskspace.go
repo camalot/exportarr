@@ -21,13 +21,13 @@ func NewDiskSpaceCollector(conf *config.ArrConfig) *diskspaceCollector {
 		freeSpaceMetric: prometheus.NewDesc(
 			prometheus.BuildFQName(conf.App, "diskspace", "freespace_bytes"),
 			"Freespace in bytes",
-			[]string{"path", "label"},
+			[]string{"path"},
 			prometheus.Labels{"url": conf.URL},
 		),
 		totalSpaceMetric: prometheus.NewDesc(
 			prometheus.BuildFQName(conf.App, "diskspace", "totalspace_bytes"),
 			"total space in bytes",
-			[]string{"path", "label"},
+			[]string{"path"},
 			prometheus.Labels{"url": conf.URL},
 		),
 
@@ -69,7 +69,6 @@ func (collector *diskspaceCollector) Collect(ch chan<- prometheus.Metric) {
 				prometheus.GaugeValue,
 				float64(disk.FreeSpace),
 				disk.Path,
-				disk.Label,
 			)
 
 			ch <- prometheus.MustNewConstMetric(
@@ -77,7 +76,6 @@ func (collector *diskspaceCollector) Collect(ch chan<- prometheus.Metric) {
 				prometheus.GaugeValue,
 				float64(disk.TotalSpace),
 				disk.Path,
-				disk.Label,
 			)
 		}
 	}
