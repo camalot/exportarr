@@ -67,7 +67,7 @@ var radarrCmd = &cobra.Command{
 				collector.NewIndexerCollector(c),
 				collector.NewDownloadClientCollector(c),
 				collector.NewUpdateCollector(c),
-				collector.NewDiskSpaceCollector(c),
+				collector.NewLogsCollector(c),
 				collector.NewBlocklistCollector(c),
 			)
 		})
@@ -99,7 +99,7 @@ var sonarrCmd = &cobra.Command{
 				collector.NewIndexerCollector(c),
 				collector.NewDownloadClientCollector(c),
 				collector.NewUpdateCollector(c),
-				collector.NewDiskSpaceCollector(c),
+				collector.NewLogsCollector(c),
 				collector.NewBlocklistCollector(c),
 			)
 		})
@@ -130,7 +130,7 @@ var lidarrCmd = &cobra.Command{
 				collector.NewIndexerCollector(c),
 				collector.NewDownloadClientCollector(c),
 				collector.NewUpdateCollector(c),
-				collector.NewDiskSpaceCollector(c),
+				collector.NewLogsCollector(c),
 				collector.NewBlocklistCollector(c),
 			)
 		})
@@ -162,7 +162,7 @@ var readarrCmd = &cobra.Command{
 				collector.NewIndexerCollector(c),
 				collector.NewDownloadClientCollector(c),
 				collector.NewUpdateCollector(c),
-				collector.NewDiskSpaceCollector(c),
+				collector.NewLogsCollector(c),
 				// unsure if this is supported
 				// collector.NewBlocklistCollector(c),
 			)
@@ -254,7 +254,7 @@ var whisparrCmd = &cobra.Command{
 				collector.NewIndexerCollector(c),
 				collector.NewDownloadClientCollector(c),
 				collector.NewUpdateCollector(c),
-				collector.NewDiskSpaceCollector(c),
+				collector.NewLogsCollector(c),
 				collector.NewBlocklistCollector(c),
 			)
 		})

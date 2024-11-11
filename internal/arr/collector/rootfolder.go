@@ -1,8 +1,6 @@
 package collector
 
 import (
-	"fmt"
-
 	"github.com/onedr0p/exportarr/internal/arr/client"
 	"github.com/onedr0p/exportarr/internal/arr/config"
 	"github.com/onedr0p/exportarr/internal/arr/model"
@@ -33,7 +31,7 @@ func NewRootFolderCollector(c *config.ArrConfig) *rootFolderCollector {
 			prometheus.Labels{"url": c.URL},
 		),
 		errorMetric: prometheus.NewDesc(
-			fmt.Sprintf("%s_rootfolder_collector_error", c.App),
+			prometheus.BuildFQName(c.App, "rootfolder", "collector_error"),
 			"Error while collecting metrics",
 			nil,
 			prometheus.Labels{"url": c.URL},

@@ -19,20 +19,20 @@ func NewDiskSpaceCollector(conf *config.ArrConfig) *diskspaceCollector {
 	return &diskspaceCollector{
 		config: conf,
 		freeSpaceMetric: prometheus.NewDesc(
-			prometheus.BuildFQName(conf.App, "diskspace", "free_bytes_total"),
+			prometheus.BuildFQName(conf.App, "diskspace", "freespace_bytes"),
 			"Freespace in bytes",
 			[]string{"path", "label"},
 			prometheus.Labels{"url": conf.URL},
 		),
 		totalSpaceMetric: prometheus.NewDesc(
-			prometheus.BuildFQName(conf.App, "diskspace", "bytes_total"),
+			prometheus.BuildFQName(conf.App, "diskspace", "totalspace_bytes"),
 			"total space in bytes",
 			[]string{"path", "label"},
 			prometheus.Labels{"url": conf.URL},
 		),
 
 		errorMetric: prometheus.NewDesc(
-			prometheus.BuildFQName(conf.App, "indexer", "collector_error"),
+			prometheus.BuildFQName(conf.App, "diskspace", "collector_error"),
 			"Error while collecting metrics",
 			nil,
 			prometheus.Labels{"url": conf.URL},

@@ -25,7 +25,7 @@ func NewBlocklistCollector(conf *config.ArrConfig) *blocklistCollector {
 		),
 
 		errorMetric: prometheus.NewDesc(
-			prometheus.BuildFQName(conf.App, "indexer", "collector_error"),
+			prometheus.BuildFQName(conf.App, "blocklist", "collector_error"),
 			"Error while collecting metrics",
 			nil,
 			prometheus.Labels{"url": conf.URL},
