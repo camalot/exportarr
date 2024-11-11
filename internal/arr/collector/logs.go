@@ -50,13 +50,13 @@ func (collector *logsCollector) Collect(ch chan<- prometheus.Metric) {
 
 	// loop through each log level
 	for _, level := range levels {
-			params := client.QueryParams{}
-			params.Add("page", "1")
-			params.Add("pageSize", "1")
-			params.Add("sortDirection", "descending")
-			params.Add("level", level)
+		params := client.QueryParams{}
+		params.Add("page", "1")
+		params.Add("pageSize", "1")
+		params.Add("sortDirection", "descending")
+		params.Add("level", level)
 
-		if err := c.DoRequest("logs", &logs); err != nil {
+		if err := c.DoRequest("log", &logs); err != nil {
 			log.Errorw("Error getting logs",
 				"error", err)
 			ch <- prometheus.NewInvalidMetric(collector.errorMetric, err)
