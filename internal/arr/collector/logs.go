@@ -56,7 +56,7 @@ func (collector *logsCollector) Collect(ch chan<- prometheus.Metric) {
 		params.Add("sortDirection", "descending")
 		params.Add("level", level)
 
-		if err := c.DoRequest("log", &logs); err != nil {
+		if err := c.DoRequest("log", &logs, params); err != nil {
 			log.Errorw("Error getting logs",
 				"error", err)
 			ch <- prometheus.NewInvalidMetric(collector.errorMetric, err)

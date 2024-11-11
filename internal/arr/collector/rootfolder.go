@@ -24,12 +24,6 @@ func NewRootFolderCollector(c *config.ArrConfig) *rootFolderCollector {
 			[]string{"path"},
 			prometheus.Labels{"url": c.URL},
 		),
-		totalSpaceMetric: prometheus.NewDesc(
-			prometheus.BuildFQName(c.App, "rootfolder", "totalspace_bytes"),
-			"Root folder total space in bytes by path",
-			[]string{"path"},
-			prometheus.Labels{"url": c.URL},
-		),
 		errorMetric: prometheus.NewDesc(
 			prometheus.BuildFQName(c.App, "rootfolder", "collector_error"),
 			"Error while collecting metrics",
@@ -41,7 +35,6 @@ func NewRootFolderCollector(c *config.ArrConfig) *rootFolderCollector {
 
 func (collector *rootFolderCollector) Describe(ch chan<- *prometheus.Desc) {
 	ch <- collector.freeSpaceMetric
-	ch <- collector.totalSpaceMetric
 }
 
 func (collector *rootFolderCollector) Collect(ch chan<- prometheus.Metric) {
@@ -64,9 +57,6 @@ func (collector *rootFolderCollector) Collect(ch chan<- prometheus.Metric) {
 	if len(rootFolders) > 0 {
 		for _, rootFolder := range rootFolders {
 			ch <- prometheus.MustNewConstMetric(collector.freeSpaceMetric, prometheus.GaugeValue, float64(rootFolder.FreeSpace),
-				rootFolder.Path,
-			)
-			ch <- prometheus.MustNewConstMetric(collector.totalSpaceMetric, prometheus.GaugeValue, float64(rootFolder.TotalSpace),
 				rootFolder.Path,
 			)
 		}

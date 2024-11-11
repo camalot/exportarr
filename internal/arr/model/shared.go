@@ -4,7 +4,6 @@ package model
 type RootFolder []struct {
 	Path       string `json:"path"`
 	FreeSpace  int64  `json:"freeSpace"`
-	TotalSpace int64  `json:"totalSpace"`
 }
 
 // SystemStatus - Stores struct of JSON response
