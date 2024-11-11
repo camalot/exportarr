@@ -68,6 +68,17 @@ func (collector *indexerCollector) Collect(ch chan<- prometheus.Metric) {
 			if indexer.EnableInteractiveSearch {
 				status += 3
 			}
+
+			// prowlarr has a different way of enabling indexers
+			if indexer.Enable && status == 0 {
+				if indexer.SupportsRss {
+					status += 1
+				}
+				if indexer.SupportsSearch {
+					status += 2
+					status += 3
+				}
+			}
 			ch <- prometheus.MustNewConstMetric(
 				collector.indexerMetric,
 				prometheus.GaugeValue,

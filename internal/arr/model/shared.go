@@ -2,8 +2,8 @@ package model
 
 // RootFolder - Stores struct of JSON response
 type RootFolder []struct {
-	Path       string `json:"path"`
-	FreeSpace  int64  `json:"freeSpace"`
+	Path      string `json:"path"`
+	FreeSpace int64  `json:"freeSpace"`
 }
 
 // SystemStatus - Stores struct of JSON response
@@ -64,6 +64,7 @@ type DownloadClient []struct {
 
 type ArrIndexer []struct {
 	Name                    string `json:"name"`
+	Enable                  bool   `json:"enable"`
 	EnableRss               bool   `json:"enableRss"`
 	EnableAutomaticSearch   bool   `json:"enableAutomaticSearch"`
 	EnableInteractiveSearch bool   `json:"enableInteractiveSearch"`
@@ -102,11 +103,11 @@ type BlockList struct {
 }
 
 type Logs struct {
-	TotalRecords int        `json:"totalRecords"`
+	TotalRecords int `json:"totalRecords"`
 	Records      []struct {
 		Level   string `json:"level"`
 		Message string `json:"message"`
 		Time    string `json:"time"`
 		Logger  string `json:"logger"`
-	}`json:"records"`
+	} `json:"records"`
 }
