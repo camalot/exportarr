@@ -255,8 +255,7 @@ var whisparrCmd = &cobra.Command{
 				collector.NewDownloadClientCollector(c),
 				collector.NewUpdateCollector(c),
 				collector.NewDiskSpaceCollector(c),
-				// this is NOT supported by Whisparr
-				// collector.NewBlocklistCollector(c),
+				collector.NewBlocklistCollector(c),
 			)
 		})
 		return nil
