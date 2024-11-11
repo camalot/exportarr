@@ -224,6 +224,7 @@ var prowlarrCmd = &cobra.Command{
 		serveHttp(func(r prometheus.Registerer) {
 			r.MustRegister(
 				collector.NewProwlarrCollector(c),
+				collector.NewIndexerCollector(c),
 				collector.NewHistoryCollector(c),
 				collector.NewSystemStatusCollector(c),
 				collector.NewSystemHealthCollector(c,

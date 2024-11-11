@@ -12,6 +12,8 @@ import (
 	"go.uber.org/zap"
 )
 
+const PROWLARR_NAMESPACE = "prowlarr"
+
 type indexerStatCache struct {
 	cache map[string]model.IndexerStats
 	mutex sync.Mutex
@@ -104,7 +106,7 @@ func NewUnavailableIndexerEmitter(url string) *UnavailableIndexerEmitter {
 
 func (e *UnavailableIndexerEmitter) Describe() *prometheus.Desc {
 	return prometheus.NewDesc(
-		"prowlarr_indexer_unavailable",
+		prometheus.BuildFQName(PROWLARR_NAMESPACE, "indexer", "unavailable"),
 		"Indexers marked unavailable due to repeated errors",
 		[]string{"indexer"},
 		prometheus.Labels{"url": e.url},
@@ -163,97 +165,97 @@ func NewProwlarrCollector(c *config.ArrConfig) *prowlarrCollector {
 		userAgentStatCache: NewUserAgentCache(),
 		lastStatUpdate:     lastStatUpdate,
 		indexerMetric: prometheus.NewDesc(
-			"prowlarr_indexer_total",
+			prometheus.BuildFQName(PROWLARR_NAMESPACE, "indexer", "total"),
 			"Total number of configured indexers",
 			nil,
 			prometheus.Labels{"url": c.URL},
 		),
 		indexerEnabledMetric: prometheus.NewDesc(
-			"prowlarr_indexer_enabled_total",
+			prometheus.BuildFQName(PROWLARR_NAMESPACE, "indexer", "enabled_total"),
 			"Total number of enabled indexers",
 			nil,
 			prometheus.Labels{"url": c.URL},
 		),
 		indexerAverageResponseTimeMetric: prometheus.NewDesc(
-			"prowlarr_indexer_average_response_time_ms",
+			prometheus.BuildFQName(PROWLARR_NAMESPACE, "indexer", "average_response_time_ms"),
 			"Average response time of indexers in ms",
 			[]string{"indexer"},
 			prometheus.Labels{"url": c.URL},
 		),
 		indexerQueriesMetric: prometheus.NewDesc(
-			"prowlarr_indexer_queries_total",
+			prometheus.BuildFQName(PROWLARR_NAMESPACE, "indexer", "queries_total"),
 			"Total number of queries",
 			[]string{"indexer"},
 			prometheus.Labels{"url": c.URL},
 		),
 		indexerGrabsMetric: prometheus.NewDesc(
-			"prowlarr_indexer_grabs_total",
+			prometheus.BuildFQName(PROWLARR_NAMESPACE, "indexer", "grabs_total"),
 			"Total number of grabs",
 			[]string{"indexer"},
 			prometheus.Labels{"url": c.URL},
 		),
 		indexerRssQueriesMetric: prometheus.NewDesc(
-			"prowlarr_indexer_rss_queries_total",
+			prometheus.BuildFQName(PROWLARR_NAMESPACE, "indexer", "rss_queries_total"),
 			"Total number of rss queries",
 			[]string{"indexer"},
 			prometheus.Labels{"url": c.URL},
 		),
 		indexerAuthQueriesMetric: prometheus.NewDesc(
-			"prowlarr_indexer_auth_queries_total",
+			prometheus.BuildFQName(PROWLARR_NAMESPACE, "indexer", "auth_queries_total"),
 			"Total number of auth queries",
 			[]string{"indexer"},
 			prometheus.Labels{"url": c.URL},
 		),
 		indexerFailedQueriesMetric: prometheus.NewDesc(
-			"prowlarr_indexer_failed_queries_total",
+			prometheus.BuildFQName(PROWLARR_NAMESPACE, "indexer", "failed_queries_total"),
 			"Total number of failed queries",
 			[]string{"indexer"},
 			prometheus.Labels{"url": c.URL},
 		),
 		indexerFailedGrabsMetric: prometheus.NewDesc(
-			"prowlarr_indexer_failed_grabs_total",
+			prometheus.BuildFQName(PROWLARR_NAMESPACE, "indexer", "failed_grabs_total"),
 			"Total number of failed grabs",
 			[]string{"indexer"},
 			prometheus.Labels{"url": c.URL},
 		),
 		indexerFailedRssQueriesMetric: prometheus.NewDesc(
-			"prowlarr_indexer_failed_rss_queries_total",
+			prometheus.BuildFQName(PROWLARR_NAMESPACE, "indexer", "failed_rss_queries_total"),
 			"Total number of failed rss queries",
 			[]string{"indexer"},
 			prometheus.Labels{"url": c.URL},
 		),
 		indexerFailedAuthQueriesMetric: prometheus.NewDesc(
-			"prowlarr_indexer_failed_auth_queries_total",
+			prometheus.BuildFQName(PROWLARR_NAMESPACE, "indexer", "failed_auth_queries_total"),
 			"Total number of failed auth queries",
 			[]string{"indexer"},
 			prometheus.Labels{"url": c.URL},
 		),
 		indexerVipExpirationMetric: prometheus.NewDesc(
-			"prowlarr_indexer_vip_expires_in_seconds",
+			prometheus.BuildFQName(PROWLARR_NAMESPACE, "indexer", "vip_expires_in_seconds"),
 			"VIP expiration date",
 			[]string{"indexer"},
 			prometheus.Labels{"url": c.URL},
 		),
 		userAgentMetric: prometheus.NewDesc(
-			"prowlarr_user_agent_total",
+			prometheus.BuildFQName(PROWLARR_NAMESPACE, "indexer", "user_agent_total"),
 			"Total number of active user agents",
 			nil,
 			prometheus.Labels{"url": c.URL},
 		),
 		userAgentQueriesMetric: prometheus.NewDesc(
-			"prowlarr_user_agent_queries_total",
+			prometheus.BuildFQName(PROWLARR_NAMESPACE, "indexer", "user_agent_queries_total"),
 			"Total number of queries",
 			[]string{"user_agent"},
 			prometheus.Labels{"url": c.URL},
 		),
 		userAgentGrabsMetric: prometheus.NewDesc(
-			"prowlarr_user_agent_grabs_total",
+			prometheus.BuildFQName(PROWLARR_NAMESPACE, "indexer", "user_agent_grabs_total"),
 			"Total number of grabs",
 			[]string{"user_agent"},
 			prometheus.Labels{"url": c.URL},
 		),
 		errorMetric: prometheus.NewDesc(
-			"prowlarr_collector_error",
+			prometheus.BuildFQName(PROWLARR_NAMESPACE, "collector", "error"),
 			"Error while collecting metrics",
 			nil,
 			prometheus.Labels{"url": c.URL},
