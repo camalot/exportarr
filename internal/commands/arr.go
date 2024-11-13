@@ -70,6 +70,7 @@ var radarrCmd = &cobra.Command{
 				collector.NewLogsCollector(c),
 				collector.NewDiskSpaceCollector(c),
 				collector.NewBlocklistCollector(c),
+				collector.NewBackupCollector(c),
 			)
 		})
 		return nil
@@ -103,6 +104,7 @@ var sonarrCmd = &cobra.Command{
 				collector.NewLogsCollector(c),
 				collector.NewDiskSpaceCollector(c),
 				collector.NewBlocklistCollector(c),
+				collector.NewBackupCollector(c),
 			)
 		})
 		return nil
@@ -135,6 +137,7 @@ var lidarrCmd = &cobra.Command{
 				collector.NewLogsCollector(c),
 				collector.NewDiskSpaceCollector(c),
 				collector.NewBlocklistCollector(c),
+				collector.NewBackupCollector(c),
 			)
 		})
 		return nil
@@ -167,6 +170,7 @@ var readarrCmd = &cobra.Command{
 				collector.NewUpdateCollector(c),
 				collector.NewLogsCollector(c),
 				collector.NewDiskSpaceCollector(c),
+				collector.NewBackupCollector(c),
 				// unsure if this is supported
 				// collector.NewBlocklistCollector(c),
 			)
@@ -228,8 +232,10 @@ var prowlarrCmd = &cobra.Command{
 				collector.NewHistoryCollector(c),
 				collector.NewSystemStatusCollector(c),
 				collector.NewLogsCollector(c),
+				collector.NewUpdateCollector(c),
 				collector.NewSystemHealthCollector(c,
 					collector.NewUnavailableIndexerEmitter(c.URL)),
+				collector.NewBackupCollector(c),
 			)
 		})
 		return nil
@@ -263,6 +269,7 @@ var whisparrCmd = &cobra.Command{
 				collector.NewLogsCollector(c),
 				collector.NewDiskSpaceCollector(c),
 				collector.NewBlocklistCollector(c),
+				collector.NewBackupCollector(c),
 			)
 		})
 		return nil

@@ -111,3 +111,12 @@ type Logs struct {
 		Logger  string `json:"logger"`
 	} `json:"records"`
 }
+
+type Backup struct {
+	ID   int    `json:"id"`
+	Name string `json:"name"`
+	Path string `json:"path"`
+	Time string `json:"time"`
+	Type string `json:"type"`
+	Size int64  `json:"size"`
+}
