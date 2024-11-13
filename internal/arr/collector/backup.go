@@ -74,7 +74,7 @@ func (collector *backupCollector) Collect(ch chan<- prometheus.Metric) {
 			typeName string
 		}
 		var lastBackupInfo lastBackup = lastBackup{age: -1, name: "", typeName: ""}
-		const layout = "2024-11-05T16:48:59Z"
+		const layout = "2006-01-02T15:04:05Z"
 		for _, backup := range backups {
 			// convert the date time string to a unix timestamp
 			backupTime, err := time.Parse(layout, backup.Time)
