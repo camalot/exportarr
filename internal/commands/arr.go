@@ -227,6 +227,7 @@ var prowlarrCmd = &cobra.Command{
 				collector.NewIndexerCollector(c),
 				collector.NewHistoryCollector(c),
 				collector.NewSystemStatusCollector(c),
+				collector.NewLogsCollector(c),
 				collector.NewSystemHealthCollector(c,
 					collector.NewUnavailableIndexerEmitter(c.URL)),
 			)
