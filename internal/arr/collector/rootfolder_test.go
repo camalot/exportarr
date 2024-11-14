@@ -51,6 +51,14 @@ func TestRootFolderCollect(t *testing.T) {
 			},
 			path: "/api/v1/rootfolder",
 		},
+		{
+			name: "whisparr",
+			config: &config.ArrConfig{
+				App:        "whisparr",
+				ApiVersion: "v3",
+			},
+			path: "/api/v3/rootfolder",
+		},
 	}
 
 	for _, tt := range tests {

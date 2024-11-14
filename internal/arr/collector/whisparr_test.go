@@ -13,59 +13,41 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestSystemHealthCollect(t *testing.T) {
-	var tests = []struct {
-		name   string
-		config *config.ArrConfig
-		path   string
+const whisparr_test_fixtures_path = "../test_fixtures/whisparr/"
+
+func newTestWhisparrServer(t *testing.T, fn func(http.ResponseWriter, *http.Request)) (*httptest.Server, error) {
+	return test_util.NewTestServer(t, whisparr_test_fixtures_path, fn)
+}
+
+func TestWhisparrCollect(t *testing.T) {
+	tests := []struct {
+		name                  string
+		config                *config.ArrConfig
+		expected_metrics_file string
 	}{
 		{
-			name: "radarr",
-			config: &config.ArrConfig{
-				App:        "radarr",
-				ApiVersion: "v3",
-			},
-			path: "/api/v3/health",
-		},
-		{
-			name: "sonarr",
-			config: &config.ArrConfig{
-				App:        "sonarr",
-				ApiVersion: "v3",
-			},
-			path: "/api/v3/health",
-		},
-		{
-			name: "lidarr",
-			config: &config.ArrConfig{
-				App:        "lidarr",
-				ApiVersion: "v1",
-			},
-			path: "/api/v1/health",
-		},
-		{
-			name: "readarr",
-			config: &config.ArrConfig{
-				App:        "readarr",
-				ApiVersion: "v1",
-			},
-			path: "/api/v1/health",
-		},
-		{
-			name: "whisparr",
+			name: "basic",
 			config: &config.ArrConfig{
 				App:        "whisparr",
 				ApiVersion: "v3",
 			},
-			path: "/api/v3/health",
+			expected_metrics_file: "expected_metrics.txt",
+		},
+		{
+			name: "additional_metrics",
+			config: &config.ArrConfig{
+				App:                     "whisparr",
+				ApiVersion:              "v3",
+				EnableAdditionalMetrics: true,
+			},
+			expected_metrics_file: "expected_metrics_extended.txt",
 		},
 	}
-
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			require := require.New(t)
-			ts, err := test_util.NewTestSharedServer(t, func(w http.ResponseWriter, r *http.Request) {
-				require.Contains(r.URL.Path, tt.path)
+			ts, err := newTestSonarrServer(t, func(w http.ResponseWriter, r *http.Request) {
+				require.Contains(r.URL.Path, "/api/")
 			})
 			require.NoError(err)
 
@@ -74,14 +56,13 @@ func TestSystemHealthCollect(t *testing.T) {
 			tt.config.URL = ts.URL
 			tt.config.ApiKey = test_util.API_KEY
 
-			collector := NewSystemHealthCollector(tt.config)
+			collector := NewSonarrCollector(tt.config)
+			require.NoError(err)
 
-			b, err := os.ReadFile(test_util.COMMON_FIXTURES_PATH + "expected_health_metrics.txt")
+			b, err := os.ReadFile(whisparr_test_fixtures_path + tt.expected_metrics_file)
 			require.NoError(err)
 
 			expected := strings.Replace(string(b), "SOMEURL", ts.URL, -1)
-			expected = strings.Replace(expected, "APP", tt.config.App, -1)
-
 			f := strings.NewReader(expected)
 
 			require.NotPanics(func() {
@@ -92,7 +73,7 @@ func TestSystemHealthCollect(t *testing.T) {
 	}
 }
 
-func TestSystemHealthCollect_FailureDoesntPanic(t *testing.T) {
+func TestWhisparrCollect_FailureDoesntPanic(t *testing.T) {
 	require := require.New(t)
 
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -104,7 +85,7 @@ func TestSystemHealthCollect_FailureDoesntPanic(t *testing.T) {
 		URL:    ts.URL,
 		ApiKey: test_util.API_KEY,
 	}
-	collector := NewSystemHealthCollector(config)
+	collector := NewRadarrCollector(config)
 
 	f := strings.NewReader("")
 

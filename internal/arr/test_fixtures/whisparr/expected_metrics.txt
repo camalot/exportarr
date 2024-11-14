@@ -1,0 +1,36 @@
+# HELP whisparr_episode_downloaded_total Total number of downloaded episodes
+# TYPE whisparr_episode_downloaded_total gauge
+whisparr_episode_downloaded_total{url="SOMEURL"} 285
+# HELP whisparr_episode_missing_total Total number of missing episodes
+# TYPE whisparr_episode_missing_total gauge
+whisparr_episode_missing_total{url="SOMEURL"} 1179
+# HELP whisparr_episode_total Total number of episodes
+# TYPE whisparr_episode_total gauge
+whisparr_episode_total{url="SOMEURL"} 675
+# HELP whisparr_season_downloaded_total Total number of downloaded seasons
+# TYPE whisparr_season_downloaded_total gauge
+whisparr_season_downloaded_total{url="SOMEURL"} 6
+# HELP whisparr_season_monitored_total Total number of monitored seasons
+# TYPE whisparr_season_monitored_total gauge
+whisparr_season_monitored_total{url="SOMEURL"} 7
+# HELP whisparr_season_total Total number of seasons
+# TYPE whisparr_season_total gauge
+whisparr_season_total{url="SOMEURL"} 33
+# HELP whisparr_season_unmonitored_total Total number of unmonitored seasons
+# TYPE whisparr_season_unmonitored_total gauge
+whisparr_season_unmonitored_total{url="SOMEURL"} 5
+# HELP whisparr_series_downloaded_total Total number of downloaded series
+# TYPE whisparr_series_downloaded_total gauge
+whisparr_series_downloaded_total{url="SOMEURL"} 5
+# HELP whisparr_series_filesize_bytes Total fizesize of all series in bytes
+# TYPE whisparr_series_filesize_bytes gauge
+whisparr_series_filesize_bytes{url="SOMEURL"} 7.91293980833e+11
+# HELP whisparr_series_monitored_total Total number of monitored series
+# TYPE whisparr_series_monitored_total gauge
+whisparr_series_monitored_total{url="SOMEURL"} 5
+# HELP whisparr_series_total Total number of series
+# TYPE whisparr_series_total gauge
+whisparr_series_total{url="SOMEURL"} 6
+# HELP whisparr_series_unmonitored_total Total number of unmonitored series
+# TYPE whisparr_series_unmonitored_total gauge
+whisparr_series_unmonitored_total{url="SOMEURL"} 1

@@ -1,0 +1,6 @@
+# HELP APP_system_backup The time in seconds since the last backup.
+# TYPE APP_system_backup gauge
+APP_system_backup{name="xxxxx_backup_v1.26.1.4838_2024.11.12_10.49.06.zip",type="scheduled",url="SOMEURL"} AGE
+# HELP APP_system_backup_bytes Backup metrics for the application.
+# TYPE APP_system_backup_bytes gauge
+APP_system_backup_bytes{age="AGE",name="xxxxx_backup_v1.26.1.4838_2024.11.12_10.49.06.zip",time="BACKUPDATETIME",type="scheduled",url="SOMEURL"} 275519

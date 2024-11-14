@@ -1,0 +1,8 @@
+# HELP APP_indexer Indexer Metrics. 0 = Disabled, RssEnabled = 1 | AutoSearchEnabled = 2 | InteractiveSearchEnabled = 3
+# TYPE APP_indexer gauge
+APP_indexer{implementation="Newznab",name="EnabledUsenetIndexer",priority="25",protocol="usenet",url="SOMEURL"} 6
+APP_indexer{implementation="Torznab",name="EnabledTorrentIndexer",priority="25",protocol="torrent",url="SOMEURL"} 6
+APP_indexer{implementation="Newznab",name="DisabledUsenetIndexer",priority="25",protocol="usenet",url="SOMEURL"} 0
+APP_indexer{implementation="Torznab",name="DisabledTorrentIndexer",priority="25",protocol="torrent",url="SOMEURL"} 0
+APP_indexer{implementation="Newznab",name="PartiallyEnabledUsenetIndexer",priority="25",protocol="usenet",url="SOMEURL"} 6
+APP_indexer{implementation="Torznab",name="PartiallyEnabledTorrentIndexer",priority="25",protocol="torrent",url="SOMEURL"} 6

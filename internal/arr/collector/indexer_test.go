@@ -13,7 +13,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestSystemHealthCollect(t *testing.T) {
+func TestIndexerCollect(t *testing.T) {
 	var tests = []struct {
 		name   string
 		config *config.ArrConfig
@@ -25,7 +25,7 @@ func TestSystemHealthCollect(t *testing.T) {
 				App:        "radarr",
 				ApiVersion: "v3",
 			},
-			path: "/api/v3/health",
+			path: "/api/v3/indexer",
 		},
 		{
 			name: "sonarr",
@@ -33,7 +33,7 @@ func TestSystemHealthCollect(t *testing.T) {
 				App:        "sonarr",
 				ApiVersion: "v3",
 			},
-			path: "/api/v3/health",
+			path: "/api/v3/indexer",
 		},
 		{
 			name: "lidarr",
@@ -41,7 +41,7 @@ func TestSystemHealthCollect(t *testing.T) {
 				App:        "lidarr",
 				ApiVersion: "v1",
 			},
-			path: "/api/v1/health",
+			path: "/api/v1/indexer",
 		},
 		{
 			name: "readarr",
@@ -49,7 +49,7 @@ func TestSystemHealthCollect(t *testing.T) {
 				App:        "readarr",
 				ApiVersion: "v1",
 			},
-			path: "/api/v1/health",
+			path: "/api/v1/indexer",
 		},
 		{
 			name: "whisparr",
@@ -57,7 +57,15 @@ func TestSystemHealthCollect(t *testing.T) {
 				App:        "whisparr",
 				ApiVersion: "v3",
 			},
-			path: "/api/v3/health",
+			path: "/api/v3/indexer",
+		},
+		{
+			name: "prowlarr",
+			config: &config.ArrConfig{
+				App:        "prowlarr",
+				ApiVersion: "v1",
+			},
+			path: "/api/v1/indexer",
 		},
 	}
 
@@ -74,9 +82,11 @@ func TestSystemHealthCollect(t *testing.T) {
 			tt.config.URL = ts.URL
 			tt.config.ApiKey = test_util.API_KEY
 
-			collector := NewSystemHealthCollector(tt.config)
+			collector := NewIndexerCollector(tt.config)
 
-			b, err := os.ReadFile(test_util.COMMON_FIXTURES_PATH + "expected_health_metrics.txt")
+			expected_metrics_file := "expected_" + tt.config.ApiVersion + "_indexer_metrics.txt"
+
+			b, err := os.ReadFile(test_util.COMMON_FIXTURES_PATH + expected_metrics_file)
 			require.NoError(err)
 
 			expected := strings.Replace(string(b), "SOMEURL", ts.URL, -1)
@@ -92,7 +102,7 @@ func TestSystemHealthCollect(t *testing.T) {
 	}
 }
 
-func TestSystemHealthCollect_FailureDoesntPanic(t *testing.T) {
+func TestIndexerCollect_FailureDoesntPanic(t *testing.T) {
 	require := require.New(t)
 
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -104,7 +114,7 @@ func TestSystemHealthCollect_FailureDoesntPanic(t *testing.T) {
 		URL:    ts.URL,
 		ApiKey: test_util.API_KEY,
 	}
-	collector := NewSystemHealthCollector(config)
+	collector := NewIndexerCollector(config)
 
 	f := strings.NewReader("")
 

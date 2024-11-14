@@ -1,0 +1,627 @@
+[
+  {
+    "indexerUrls": [
+      "https://1.fake.usenet.indexer.url"
+    ],
+    "legacyUrls": [],
+    "definitionName": "Newznab",
+    "description": "Newznab is an API search specification for Usenet",
+    "language": "en-US",
+    "encoding": "Unicode (UTF-8)",
+    "enable": true,
+    "redirect": true,
+    "supportsRss": true,
+    "supportsSearch": true,
+    "supportsRedirect": true,
+    "supportsPagination": true,
+    "appProfileId": 1,
+    "protocol": "usenet",
+    "privacy": "private",
+    "capabilities": {
+      "limitsMax": 100,
+      "limitsDefault": 100,
+      "categories": [
+        {
+          "id": 1000,
+          "name": "Console",
+          "subCategories": [
+            {
+              "id": 1010,
+              "name": "NDS",
+              "description": "Console",
+              "subCategories": []
+            },
+            {
+              "id": 1020,
+              "name": "PSP",
+              "description": "Console",
+              "subCategories": []
+            },
+            {
+              "id": 1030,
+              "name": "Wii",
+              "description": "Console",
+              "subCategories": []
+            },
+            {
+              "id": 1035,
+              "name": "Switch",
+              "description": "Console",
+              "subCategories": []
+            },
+            {
+              "id": 1040,
+              "name": "Xbox",
+              "description": "Console",
+              "subCategories": []
+            },
+            {
+              "id": 1050,
+              "name": "Xbox 360",
+              "description": "Console",
+              "subCategories": []
+            },
+            {
+              "id": 1060,
+              "name": "WiiWare/VC",
+              "description": "Console",
+              "subCategories": []
+            },
+            {
+              "id": 1070,
+              "name": "XBOX 360 DLC",
+              "description": "Console",
+              "subCategories": []
+            },
+            {
+              "id": 1080,
+              "name": "PS3",
+              "description": "Console",
+              "subCategories": []
+            },
+            {
+              "id": 1090,
+              "name": "Xbox One",
+              "description": "Console",
+              "subCategories": []
+            },
+            {
+              "id": 1100,
+              "name": "PS4",
+              "description": "Console",
+              "subCategories": []
+            },
+            {
+              "id": 1110,
+              "name": "NSW",
+              "description": "Console",
+              "subCategories": []
+            }
+          ]
+        },
+        {
+          "id": 2000,
+          "name": "Movies",
+          "subCategories": [
+            {
+              "id": 2010,
+              "name": "Foreign",
+              "description": "Movies",
+              "subCategories": []
+            },
+            {
+              "id": 2020,
+              "name": "Other",
+              "description": "Movies",
+              "subCategories": []
+            },
+            {
+              "id": 2030,
+              "name": "SD",
+              "description": "Movies",
+              "subCategories": []
+            },
+            {
+              "id": 2040,
+              "name": "HD",
+              "description": "Movies",
+              "subCategories": []
+            },
+            {
+              "id": 2045,
+              "name": "UHD",
+              "description": "Movies",
+              "subCategories": []
+            },
+            {
+              "id": 2050,
+              "name": "BluRay",
+              "description": "Movies",
+              "subCategories": []
+            },
+            {
+              "id": 2060,
+              "name": "3D",
+              "description": "Movies",
+              "subCategories": []
+            }
+          ]
+        },
+        {
+          "id": 3000,
+          "name": "Audio",
+          "subCategories": [
+            {
+              "id": 3010,
+              "name": "MP3",
+              "description": "Audio",
+              "subCategories": []
+            },
+            {
+              "id": 3020,
+              "name": "Video",
+              "description": "Audio",
+              "subCategories": []
+            },
+            {
+              "id": 3030,
+              "name": "Audiobook",
+              "description": "Audio",
+              "subCategories": []
+            },
+            {
+              "id": 3040,
+              "name": "Lossless",
+              "description": "Audio",
+              "subCategories": []
+            }
+          ]
+        },
+        {
+          "id": 4000,
+          "name": "PC",
+          "subCategories": [
+            {
+              "id": 4010,
+              "name": "0day",
+              "description": "PC",
+              "subCategories": []
+            },
+            {
+              "id": 4020,
+              "name": "ISO",
+              "description": "PC",
+              "subCategories": []
+            },
+            {
+              "id": 4030,
+              "name": "Mac",
+              "description": "PC",
+              "subCategories": []
+            },
+            {
+              "id": 4040,
+              "name": "Mobile-Other",
+              "description": "PC",
+              "subCategories": []
+            },
+            {
+              "id": 4050,
+              "name": "Games",
+              "description": "PC",
+              "subCategories": []
+            },
+            {
+              "id": 4060,
+              "name": "Mobile-iOS",
+              "description": "PC",
+              "subCategories": []
+            },
+            {
+              "id": 4070,
+              "name": "Mobile-Android",
+              "description": "PC",
+              "subCategories": []
+            }
+          ]
+        },
+        {
+          "id": 5000,
+          "name": "TV",
+          "subCategories": [
+            {
+              "id": 5020,
+              "name": "Foreign",
+              "description": "TV",
+              "subCategories": []
+            },
+            {
+              "id": 5030,
+              "name": "SD",
+              "description": "TV",
+              "subCategories": []
+            },
+            {
+              "id": 5040,
+              "name": "HD",
+              "description": "TV",
+              "subCategories": []
+            },
+            {
+              "id": 5045,
+              "name": "UHD",
+              "description": "TV",
+              "subCategories": []
+            },
+            {
+              "id": 5050,
+              "name": "Other",
+              "description": "TV",
+              "subCategories": []
+            },
+            {
+              "id": 5060,
+              "name": "Sport",
+              "description": "TV",
+              "subCategories": []
+            },
+            {
+              "id": 5070,
+              "name": "Anime",
+              "description": "TV",
+              "subCategories": []
+            },
+            {
+              "id": 5080,
+              "name": "Documentary",
+              "description": "TV",
+              "subCategories": []
+            }
+          ]
+        },
+        {
+          "id": 6000,
+          "name": "XXX",
+          "subCategories": [
+            {
+              "id": 6010,
+              "name": "DVD",
+              "description": "XXX",
+              "subCategories": []
+            },
+            {
+              "id": 6020,
+              "name": "WMV",
+              "description": "XXX",
+              "subCategories": []
+            },
+            {
+              "id": 6030,
+              "name": "XviD",
+              "description": "XXX",
+              "subCategories": []
+            },
+            {
+              "id": 6040,
+              "name": "x264",
+              "description": "XXX",
+              "subCategories": []
+            },
+            {
+              "id": 6050,
+              "name": "Pack",
+              "description": "XXX",
+              "subCategories": []
+            },
+            {
+              "id": 6060,
+              "name": "ImgSet",
+              "description": "XXX",
+              "subCategories": []
+            },
+            {
+              "id": 6070,
+              "name": "Other",
+              "description": "XXX",
+              "subCategories": []
+            }
+          ]
+        },
+        {
+          "id": 7000,
+          "name": "Books",
+          "subCategories": [
+            {
+              "id": 7010,
+              "name": "Mags",
+              "description": "Books",
+              "subCategories": []
+            },
+            {
+              "id": 7020,
+              "name": "Ebook",
+              "description": "Books",
+              "subCategories": []
+            },
+            {
+              "id": 7030,
+              "name": "Comics",
+              "description": "Books",
+              "subCategories": []
+            }
+          ]
+        },
+        {
+          "id": 8000,
+          "name": "Other",
+          "subCategories": [
+            {
+              "id": 8010,
+              "name": "Misc",
+              "description": "Other",
+              "subCategories": []
+            }
+          ]
+        }
+      ],
+      "supportsRawSearch": false,
+      "searchParams": [
+        "q"
+      ],
+      "tvSearchParams": [],
+      "movieSearchParams": [],
+      "musicSearchParams": [],
+      "bookSearchParams": []
+    },
+    "priority": 25,
+    "downloadClientId": 0,
+    "added": "2021-08-15T03:53:37Z",
+    "sortName": "enabledusenetindexer",
+    "name": "EnabledUsenetIndexer",
+    "fields": [],
+    "implementationName": "Newznab",
+    "implementation": "Newznab",
+    "configContract": "NewznabSettings",
+    "infoLink": "https://wiki.servarr.com/prowlarr/supported-indexers#newznab",
+    "tags": [],
+    "id": 1
+  },
+  {
+    "indexerUrls": [
+      "https://1.fake.torrent.indexer.url"
+    ],
+    "legacyUrls": [],
+    "definitionName": "Torznab",
+    "description": "A Newznab-like api for torrents.",
+    "language": "en-US",
+    "encoding": "Unicode (UTF-8)",
+    "enable": true,
+    "redirect": true,
+    "supportsRss": true,
+    "supportsSearch": true,
+    "supportsRedirect": true,
+    "supportsPagination": true,
+    "appProfileId": 1,
+    "protocol": "torrent",
+    "privacy": "private",
+    "capabilities": {
+      "limitsMax": 100,
+      "limitsDefault": 100,
+      "categories": [],
+      "supportsRawSearch": false,
+      "searchParams": [
+        "q"
+      ],
+      "tvSearchParams": [
+        "q",
+        "season",
+        "ep"
+      ],
+      "movieSearchParams": [
+        "q"
+      ],
+      "musicSearchParams": [],
+      "bookSearchParams": []
+    },
+    "priority": 25,
+    "downloadClientId": 0,
+    "added": "2024-06-01T21:53:27Z",
+    "sortName": "enabledtorrentindexer",
+    "name": "EnabledTorrentIndexer",
+    "fields": [],
+    "implementationName": "Torznab",
+    "implementation": "Torznab",
+    "configContract": "TorznabSettings",
+    "infoLink": "https://wiki.servarr.com/prowlarr/supported-indexers#torznab",
+    "tags": [],
+    "id": 4
+  },
+  {
+    "indexerUrls": [
+      "https://2.fake.usenet.indexer.url"
+    ],
+    "legacyUrls": [],
+    "definitionName": "Newznab",
+    "description": "Newznab is an API search specification for Usenet",
+    "language": "en-US",
+    "encoding": "Unicode (UTF-8)",
+    "enable": false,
+    "redirect": true,
+    "supportsRss": false,
+    "supportsSearch": false,
+    "supportsRedirect": true,
+    "supportsPagination": true,
+    "appProfileId": 1,
+    "protocol": "usenet",
+    "privacy": "private",
+    "capabilities": {
+      "limitsMax": 100,
+      "limitsDefault": 100,
+      "categories": [],
+      "supportsRawSearch": false,
+      "searchParams": [
+        "q"
+      ],
+      "tvSearchParams": [],
+      "movieSearchParams": [],
+      "musicSearchParams": [],
+      "bookSearchParams": []
+    },
+    "priority": 25,
+    "downloadClientId": 0,
+    "added": "2021-08-15T03:53:37Z",
+    "sortName": "disabledusenetindexer",
+    "name": "DisabledUsenetIndexer",
+    "fields": [],
+    "implementationName": "Newznab",
+    "implementation": "Newznab",
+    "configContract": "NewznabSettings",
+    "infoLink": "https://wiki.servarr.com/prowlarr/supported-indexers#newznab",
+    "tags": [],
+    "id": 2
+  },
+  {
+    "indexerUrls": [
+      "https://2.fake.torrent.indexer.url"
+    ],
+    "legacyUrls": [],
+    "definitionName": "Torznab",
+    "description": "A Newznab-like api for torrents.",
+    "language": "en-US",
+    "encoding": "Unicode (UTF-8)",
+    "enable": false,
+    "redirect": true,
+    "supportsRss": false,
+    "supportsSearch": false,
+    "supportsRedirect": true,
+    "supportsPagination": true,
+    "appProfileId": 1,
+    "protocol": "torrent",
+    "privacy": "private",
+    "capabilities": {
+      "limitsMax": 100,
+      "limitsDefault": 100,
+      "categories": [],
+      "supportsRawSearch": false,
+      "searchParams": [
+        "q"
+      ],
+      "tvSearchParams": [
+        "q",
+        "season",
+        "ep"
+      ],
+      "movieSearchParams": [
+        "q"
+      ],
+      "musicSearchParams": [],
+      "bookSearchParams": []
+    },
+    "priority": 25,
+    "downloadClientId": 0,
+    "added": "2024-06-01T21:53:27Z",
+    "sortName": "disabledtorrentindexer",
+    "name": "DisabledTorrentIndexer",
+    "fields": [],
+    "implementationName": "Torznab",
+    "implementation": "Torznab",
+    "configContract": "TorznabSettings",
+    "infoLink": "https://wiki.servarr.com/prowlarr/supported-indexers#torznab",
+    "tags": [],
+    "id": 3
+  },
+    {
+      "indexerUrls": [
+        "https://2.fake.usenet.indexer.url"
+      ],
+      "legacyUrls": [],
+      "definitionName": "Newznab",
+      "description": "Newznab is an API search specification for Usenet",
+      "language": "en-US",
+      "encoding": "Unicode (UTF-8)",
+      "enable": true,
+      "redirect": true,
+      "supportsRss": true,
+      "supportsSearch": true,
+      "supportsRedirect": true,
+      "supportsPagination": true,
+      "appProfileId": 1,
+      "protocol": "usenet",
+      "privacy": "private",
+      "capabilities": {
+        "limitsMax": 100,
+        "limitsDefault": 100,
+        "categories": [],
+        "supportsRawSearch": false,
+        "searchParams": [
+          "q"
+        ],
+        "tvSearchParams": [],
+        "movieSearchParams": [],
+        "musicSearchParams": [],
+        "bookSearchParams": []
+      },
+      "priority": 25,
+      "downloadClientId": 0,
+      "added": "2021-08-15T03:53:37Z",
+      "sortName": "partiallyenabledusenetindexer",
+      "name": "PartiallyEnabledUsenetIndexer",
+      "fields": [],
+      "implementationName": "Newznab",
+      "implementation": "Newznab",
+      "configContract": "NewznabSettings",
+      "infoLink": "https://wiki.servarr.com/prowlarr/supported-indexers#newznab",
+      "tags": [],
+      "id": 5
+    },
+    {
+      "indexerUrls": [
+        "https://3.fake.torrent.indexer.url"
+      ],
+      "legacyUrls": [],
+      "definitionName": "Torznab",
+      "description": "A Newznab-like api for torrents.",
+      "language": "en-US",
+      "encoding": "Unicode (UTF-8)",
+      "enable": true,
+      "redirect": true,
+      "supportsRss": true,
+      "supportsSearch": true,
+      "supportsRedirect": true,
+      "supportsPagination": true,
+      "appProfileId": 1,
+      "protocol": "torrent",
+      "privacy": "private",
+      "capabilities": {
+        "limitsMax": 100,
+        "limitsDefault": 100,
+        "categories": [],
+        "supportsRawSearch": false,
+        "searchParams": [
+          "q"
+        ],
+        "tvSearchParams": [
+          "q",
+          "season",
+          "ep"
+        ],
+        "movieSearchParams": [
+          "q"
+        ],
+        "musicSearchParams": [],
+        "bookSearchParams": []
+      },
+      "priority": 25,
+      "downloadClientId": 0,
+      "added": "2024-06-01T21:53:27Z",
+      "sortName": "partiallyenabledtorrentindexer",
+      "name": "PartiallyEnabledTorrentIndexer",
+      "fields": [],
+      "implementationName": "Torznab",
+      "implementation": "Torznab",
+      "configContract": "TorznabSettings",
+      "infoLink": "https://wiki.servarr.com/prowlarr/supported-indexers#torznab",
+      "tags": [],
+      "id": 6
+    }
+]

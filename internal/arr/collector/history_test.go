@@ -51,6 +51,14 @@ func TestHistoryCollect(t *testing.T) {
 			},
 			path: "/api/v1/history",
 		},
+		{
+			name: "whisparr",
+			config: &config.ArrConfig{
+				App:        "whisparr",
+				ApiVersion: "v3",
+			},
+			path: "/api/v3/history",
+		},
 	}
 
 	for _, tt := range tests {
