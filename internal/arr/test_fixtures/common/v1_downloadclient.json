@@ -1,0 +1,32 @@
+[
+  {
+    "enable": true,
+    "protocol": "torrent",
+    "priority": 1,
+    "removeCompletedDownloads": true,
+    "removeFailedDownloads": true,
+    "name": "Deluge",
+    "fields": [ ],
+    "implementationName": "Deluge",
+    "implementation": "Deluge",
+    "configContract": "DelugeSettings",
+    "infoLink": "https://wiki.servarr.com/lidarr/supported#deluge",
+    "tags": [],
+    "id": 1
+  },
+  {
+    "enable": true,
+    "protocol": "usenet",
+    "priority": 1,
+    "removeCompletedDownloads": true,
+    "removeFailedDownloads": true,
+    "name": "SABNZB",
+    "fields": [ ],
+    "implementationName": "SABnzbd",
+    "implementation": "Sabnzbd",
+    "configContract": "SabnzbdSettings",
+    "infoLink": "https://wiki.servarr.com/lidarr/supported#sabnzbd",
+    "tags": [],
+    "id": 2
+  }
+]

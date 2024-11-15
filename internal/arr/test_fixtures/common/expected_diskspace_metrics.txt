@@ -1,0 +1,8 @@
+# HELP APP_diskspace_freespace_bytes Freespace in bytes
+# TYPE APP_diskspace_freespace_bytes gauge
+APP_diskspace_freespace_bytes{path="/",url="SOMEURL"} 1.705118150656e+12
+APP_diskspace_freespace_bytes{path="/config",url="SOMEURL"} 1.705118150656e+12
+# HELP APP_diskspace_totalspace_bytes total space in bytes
+# TYPE APP_diskspace_totalspace_bytes gauge
+APP_diskspace_totalspace_bytes{path="/",url="SOMEURL"} 1.967591211008e+12
+APP_diskspace_totalspace_bytes{path="/config",url="SOMEURL"} 1.967591211008e+12

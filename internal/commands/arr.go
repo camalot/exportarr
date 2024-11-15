@@ -171,8 +171,7 @@ var readarrCmd = &cobra.Command{
 				collector.NewLogsCollector(c),
 				collector.NewDiskSpaceCollector(c),
 				collector.NewBackupCollector(c),
-				// unsure if this is supported
-				// collector.NewBlocklistCollector(c),
+				collector.NewBlocklistCollector(c),
 			)
 		})
 		return nil

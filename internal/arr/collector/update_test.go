@@ -4,10 +4,8 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"os"
-	"strconv"
 	"strings"
 	"testing"
-	"time"
 
 	"github.com/onedr0p/exportarr/internal/arr/config"
 	"github.com/onedr0p/exportarr/internal/test_util"
@@ -15,7 +13,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestBackupCollect(t *testing.T) {
+func TestUpdateCollect(t *testing.T) {
 	var tests = []struct {
 		name   string
 		config *config.ArrConfig
@@ -27,7 +25,7 @@ func TestBackupCollect(t *testing.T) {
 				App:        "radarr",
 				ApiVersion: "v3",
 			},
-			path: "/api/v3/system/backup",
+			path: "/api/v3/update",
 		},
 		{
 			name: "sonarr",
@@ -35,7 +33,7 @@ func TestBackupCollect(t *testing.T) {
 				App:        "sonarr",
 				ApiVersion: "v3",
 			},
-			path: "/api/v3/system/backup",
+			path: "/api/v3/update",
 		},
 		{
 			name: "lidarr",
@@ -43,23 +41,7 @@ func TestBackupCollect(t *testing.T) {
 				App:        "lidarr",
 				ApiVersion: "v1",
 			},
-			path: "/api/v1/system/backup",
-		},
-		{
-			name: "readarr",
-			config: &config.ArrConfig{
-				App:        "readarr",
-				ApiVersion: "v1",
-			},
-			path: "/api/v1/system/backup",
-		},
-		{
-			name: "whisparr",
-			config: &config.ArrConfig{
-				App:        "whisparr",
-				ApiVersion: "v3",
-			},
-			path: "/api/v3/system/backup",
+			path: "/api/v1/update",
 		},
 		{
 			name: "prowlarr",
@@ -67,7 +49,23 @@ func TestBackupCollect(t *testing.T) {
 				App:        "prowlarr",
 				ApiVersion: "v1",
 			},
-			path: "/api/v1/system/backup",
+			path: "/api/v1/update",
+		},
+		{
+			name: "readarr",
+			config: &config.ArrConfig{
+				App:        "readarr",
+				ApiVersion: "v1",
+			},
+			path: "/api/v1/update",
+		},
+		{
+			name: "whisparr",
+			config: &config.ArrConfig{
+				App:        "whisparr",
+				ApiVersion: "v3",
+			},
+			path: "/api/v3/update",
 		},
 	}
 
@@ -84,26 +82,15 @@ func TestBackupCollect(t *testing.T) {
 			tt.config.URL = ts.URL
 			tt.config.ApiKey = test_util.API_KEY
 
-			collector := NewBackupCollector(tt.config)
+			collector := NewUpdateCollector(tt.config)
 
-			expected_metrics_file := "expected_system_backup_metrics.txt"
+			expected_metrics_file := "expected_update_metrics.txt"
 
 			b, err := os.ReadFile(test_util.COMMON_FIXTURES_PATH + expected_metrics_file)
 			require.NoError(err)
-			layout := "2006-01-02T15:04:05Z"
-			backup_datetime := "2024-11-12T16:49:07Z"
-
-			now_unix := time.Now().Unix()
-			backup_time, err := time.Parse(layout, backup_datetime)
-
-			require.NoError(err)
-			backup_unix := backup_time.Unix()
-			age := now_unix - backup_unix
 
 			expected := strings.Replace(string(b), "SOMEURL", ts.URL, -1)
 			expected = strings.Replace(expected, "APP", tt.config.App, -1)
-			expected = strings.Replace(expected, "BACKUPDATETIME", backup_datetime, -1)
-			expected = strings.Replace(expected, "AGE", strconv.FormatInt(age, 10), -1)
 
 			f := strings.NewReader(expected)
 
@@ -115,7 +102,7 @@ func TestBackupCollect(t *testing.T) {
 	}
 }
 
-func TestBackupCollect_FailureDoesntPanic(t *testing.T) {
+func TestUpdateCollect_FailureDoesntPanic(t *testing.T) {
 	require := require.New(t)
 
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -127,7 +114,7 @@ func TestBackupCollect_FailureDoesntPanic(t *testing.T) {
 		URL:    ts.URL,
 		ApiKey: test_util.API_KEY,
 	}
-	collector := NewBackupCollector(config)
+	collector := NewUpdateCollector(config)
 
 	f := strings.NewReader("")
 

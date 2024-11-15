@@ -1,0 +1,4 @@
+# HELP APP_downloadclient Download Client Metrics.
+# TYPE APP_downloadclient gauge
+APP_downloadclient{implementation="Deluge",name="Deluge",priority="1",protocol="torrent",removeCompletedDownloads="true",removeFailedDownloads="true",url="SOMEURL"} 1
+APP_downloadclient{implementation="Sabnzbd",name="SABNZB",priority="1",protocol="usenet",removeCompletedDownloads="true",removeFailedDownloads="true",url="SOMEURL"} 1

@@ -1,0 +1,6 @@
+# HELP APP_logs_total Total number of logs
+# TYPE APP_logs_total gauge
+APP_logs_total{level="error",url="SOMEURL"} 31
+APP_logs_total{level="fatal",url="SOMEURL"} 31
+APP_logs_total{level="info",url="SOMEURL"} 31
+APP_logs_total{level="warn",url="SOMEURL"} 31

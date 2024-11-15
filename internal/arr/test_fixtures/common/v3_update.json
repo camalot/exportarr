@@ -1,0 +1,47 @@
+[
+  {
+    "version": "5.14.0.9383",
+    "branch": "master",
+    "releaseDate": "2024-10-26T14:40:43Z",
+    "fileName": "Radarr.master.5.14.0.9383.linux-musl-core-x64.tar.gz",
+    "url": "https://github.com/Radarr/Radarr/releases/download/v5.14.0.9383/Radarr.master.5.14.0.9383.linux-musl-core-x64.tar.gz",
+    "installed": true,
+    "installedOn": "2024-10-27T04:18:55Z",
+    "installable": false,
+    "latest": true,
+    "changes": {
+      "new": [],
+      "fixed": [
+        "Optional square and round brackets for \"{Release Year}\"",
+        "Stopped/Started as initial state for qBittorrent v5.0"
+      ]
+    },
+    "hash": "82f29297833f7c467c05736ec9d3d1ef70bc847c290d78dbd613ce010d63c9a8"
+  },
+  {
+    "version": "5.13.1.9378",
+    "branch": "master",
+    "releaseDate": "2024-10-26T06:09:15Z",
+    "fileName": "Radarr.master.5.13.1.9378.linux-musl-core-x64.tar.gz",
+    "url": "https://github.com/Radarr/Radarr/releases/download/v5.13.1.9378/Radarr.master.5.13.1.9378.linux-musl-core-x64.tar.gz",
+    "installed": false,
+    "installable": false,
+    "latest": false,
+    "changes": {
+      "new": [
+        "Group updates for the same movie for Kodi and Emby / Jellyfin [ #10150 ]",
+        "Allow major version updates to be installed",
+        "Romania and India added to list of Certification Countries",
+        "Sync updates to UI for providers (#10550)",
+        "Parse pt-BR releases as Brazilian Portuguese (#10554)",
+        "Parse ES as Spanish"
+      ],
+      "fixed": [
+        "PWA Manifest with URL base [ #10317, #10329 ]",
+        "Release Year mandatory to generate valid file formats",
+        "Add only movies with release dates from monitored collections"
+      ]
+    },
+    "hash": "24760479f8137daccfd30d71ff68723403d3996e55f25d5c07e266b6cab53d0f"
+  }
+]
