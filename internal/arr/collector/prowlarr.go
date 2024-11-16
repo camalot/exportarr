@@ -35,14 +35,15 @@ func (i *indexerStatCache) UpdateKey(key string, value model.IndexerStats) model
 		}
 	}
 	entry.AverageResponseTime = value.AverageResponseTime
-	entry.NumberOfQueries += value.NumberOfQueries
-	entry.NumberOfGrabs += value.NumberOfGrabs
-	entry.NumberOfRssQueries += value.NumberOfRssQueries
-	entry.NumberOfAuthQueries += value.NumberOfAuthQueries
-	entry.NumberOfFailedQueries += value.NumberOfFailedQueries
-	entry.NumberOfFailedGrabs += value.NumberOfFailedGrabs
-	entry.NumberOfFailedRssQueries += value.NumberOfFailedRssQueries
-	entry.NumberOfFailedAuthQueries += value.NumberOfFailedAuthQueries
+	entry.AverageGrabResponseTime = value.AverageGrabResponseTime
+	entry.NumberOfQueries = value.NumberOfQueries
+	entry.NumberOfGrabs = value.NumberOfGrabs
+	entry.NumberOfRssQueries = value.NumberOfRssQueries
+	entry.NumberOfAuthQueries = value.NumberOfAuthQueries
+	entry.NumberOfFailedQueries = value.NumberOfFailedQueries
+	entry.NumberOfFailedGrabs = value.NumberOfFailedGrabs
+	entry.NumberOfFailedRssQueries = value.NumberOfFailedRssQueries
+	entry.NumberOfFailedAuthQueries = value.NumberOfFailedAuthQueries
 	i.cache[key] = entry
 	return entry
 }
@@ -87,9 +88,8 @@ func (u *userAgentStatCache) UpdateKey(key string, value model.UserAgentStats) m
 			UserAgent: value.UserAgent,
 		}
 	}
-
-	entry.NumberOfQueries += value.NumberOfQueries
-	entry.NumberOfGrabs += value.NumberOfGrabs
+	entry.NumberOfQueries = value.NumberOfQueries
+	entry.NumberOfGrabs = value.NumberOfGrabs
 	u.cache[key] = entry
 	return entry
 }
@@ -317,12 +317,12 @@ func (collector *prowlarrCollector) Collect(ch chan<- prometheus.Metric) {
 	}
 
 	stats := model.IndexerStatResponse{}
-	startDate := collector.lastStatUpdate.In(time.UTC)
+	// startDate := collector.lastStatUpdate.In(time.UTC)
 	endDate := time.Now().In(time.UTC)
 
 	params := client.QueryParams{}
-	params.Add("startDate", startDate.Format(time.RFC3339))
-	params.Add("endDate", endDate.Format(time.RFC3339))
+	// params.Add("startDate", startDate.Format(time.RFC3339))
+	// params.Add("endDate", endDate.Format(time.RFC3339))
 
 	if err := c.DoRequest("indexerstats", &stats, params); err != nil {
 		log.Errorf("Error getting indexer stats: %s", err)
@@ -338,7 +338,9 @@ func (collector *prowlarrCollector) Collect(ch chan<- prometheus.Metric) {
 	for _, cistats := range collector.indexerStatCache.GetIndexerStats() {
 		ch <- prometheus.MustNewConstMetric(collector.indexerAverageResponseTimeMetric, prometheus.GaugeValue, float64(cistats.AverageResponseTime), cistats.Name)
 		ch <- prometheus.MustNewConstMetric(collector.indexerQueriesMetric, prometheus.GaugeValue, float64(cistats.NumberOfQueries), cistats.Name)
-		ch <- prometheus.MustNewConstMetric(collector.indexerGrabsMetric, prometheus.GaugeValue, float64(cistats.NumberOfGrabs), cistats.Name)
+		ch <- prometheus.MustNewConstMetric(
+			collector.indexerGrabsMetric, prometheus.GaugeValue, float64(cistats.NumberOfGrabs), cistats.Name,
+		)
 		ch <- prometheus.MustNewConstMetric(collector.indexerRssQueriesMetric, prometheus.GaugeValue, float64(cistats.NumberOfRssQueries), cistats.Name)
 		ch <- prometheus.MustNewConstMetric(collector.indexerAuthQueriesMetric, prometheus.GaugeValue, float64(cistats.NumberOfAuthQueries), cistats.Name)
 		ch <- prometheus.MustNewConstMetric(collector.indexerFailedQueriesMetric, prometheus.GaugeValue, float64(cistats.NumberOfFailedQueries), cistats.Name)

@@ -15,6 +15,7 @@ type Indexer []struct {
 type IndexerStats struct {
 	Name                      string `json:"indexerName"`
 	AverageResponseTime       int    `json:"averageResponseTime"`
+	AverageGrabResponseTime   int    `json:"averageGrabResponseTime"`
 	NumberOfQueries           int    `json:"numberOfQueries"`
 	NumberOfGrabs             int    `json:"numberOfGrabs"`
 	NumberOfRssQueries        int    `json:"numberOfRssQueries"`
