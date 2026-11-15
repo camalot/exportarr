@@ -1,6 +1,6 @@
 # Exportarr
 
-AIO Prometheus Exporter for Sonarr, Radarr, Lidarr, Prowlarr, Readarr, Bazarr, Whisparr and Sabnzbd
+AIO Prometheus Exporter for Sonarr, Radarr, Lidarr, Prowlarr, Readarr, Bazarr, Whisparr, Sabnzbd and Narratarr
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/onedr0p/exportarr)](https://goreportcard.com/report/github.com/onedr0p/exportarr)
 
@@ -63,13 +63,25 @@ Visit http://127.0.0.1:9707/metrics to see the app metrics
 |           `INTERFACE`           | `--interface` or `-i`          | The interface IP Exportarr will listen on                      | `0.0.0.0`            |    ❌    |
 |           `LOG_LEVEL`           | `--log-level` or `-l`          | Set the default Log Level                                      | `INFO`               |    ❌    |
 |      `DISABLE_SSL_VERIFY`       | `--disable-ssl-verify`         | Set to `true` to disable SSL verification                      | `false`              |    ❌    |
-|         `AUTH_PASSWORD`         | `--auth-password`              | Set to your basic or form auth password                        |                      |    ❌    |
-|         `AUTH_USERNAME`         | `--auth-username`              | Set to your basic or form auth username                        |                      |    ❌    |
+|         `AUTH_PASSWORD`         | `--auth-password`              | Basic/form auth or Narratarr password                          |                      |    ❌    |
+|         `AUTH_USERNAME`         | `--auth-username`              | Basic/form auth or Narratarr username                          |                      |    ❌    |
 |           `FORM_AUTH`           | `--form-auth`                  | Use Form Auth instead of basic auth                            | `false`              |    ❌    |
 |   `ENABLE_ADDITIONAL_METRICS`   | `--enable-additional-metrics`  | Set to `true` to enable gathering of additional metrics (slow) | `false`              |    ❌    |
 |  `ENABLE_UNKNOWN_QUEUE_ITEMS`   | `--enable-unknown-queue-items` | Set to `true` to enable gathering unknown queue items          | `false`              |    ❌    |
 |      `PROWLARR__BACKFILL`       | `--backfill`                   | Set to `true` to enable backfill of historical metrics         | `false`              |    ❌    |
 | `PROWLARR__BACKFILL_SINCE_DATE` | `--backfill-since-date`        | Set a date from which to start the backfill                    | `1970-01-01` (epoch) |    ❌    |
+
+### Narratarr
+
+Narratarr uses its public API, not an Arr API key. Configure `URL`, `AUTH_USERNAME` and
+`AUTH_PASSWORD`, and run `exportarr narratarr`. Narratarr 0.6.0 or newer is required.
+Use HTTPS or a trusted network: credentials and bearer tokens are sent to Narratarr.
+Tokens are kept in memory and refreshed while Exportarr runs. Each restart signs in as a
+new app, which appears in the Narratarr account's app list.
+
+The collector exposes `narratarr_info`, `narratarr_requests_total` and
+`narratarr_requests` (by status and format). Counts include all users and both
+audiobooks and ebooks. API failures cause the scrape to fail rather than report partial counts.
 
 ### Prowlarr Backfill
 

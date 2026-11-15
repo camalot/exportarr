@@ -19,6 +19,8 @@ func init() {
 	config.RegisterArrFlags(prowlarrCmd.PersistentFlags())
 	config.RegisterArrFlags(whisparrCmd.PersistentFlags())
 	config.RegisterArrFlags(bazarrCmd.PersistentFlags())
+	narratarrCmd.PersistentFlags().String("auth-username", "", "Narratarr username")
+	narratarrCmd.PersistentFlags().String("auth-password", "", "Narratarr password")
 	config.RegisterProwlarrFlags(prowlarrCmd.PersistentFlags())
 	config.RegisterBazarrFlags(bazarrCmd.PersistentFlags())
 
@@ -30,6 +32,7 @@ func init() {
 		bazarrCmd,
 		prowlarrCmd,
 		whisparrCmd,
+		narratarrCmd,
 	)
 }
 
@@ -41,6 +44,25 @@ func UsageOnError(cmd *cobra.Command, err error) {
 		}
 		os.Exit(1)
 	}
+}
+
+var narratarrCmd = &cobra.Command{
+	Use:   "narratarr",
+	Short: "Prometheus Exporter for Narratarr",
+	RunE: func(cmd *cobra.Command, args []string) error {
+		c, err := config.LoadArrConfig(*conf, cmd.PersistentFlags())
+		if err != nil {
+			return err
+		}
+		c.ApiVersion = "v1"
+		if err := c.ValidateNarratarr(); err != nil {
+			return err
+		}
+		serveHttp(func(r prometheus.Registerer) {
+			r.MustRegister(collector.NewNarratarrCollector(c))
+		})
+		return nil
+	},
 }
 
 var radarrCmd = &cobra.Command{

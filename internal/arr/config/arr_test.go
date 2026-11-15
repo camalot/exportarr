@@ -285,6 +285,7 @@ func TestValidate(t *testing.T) {
 			valid: false,
 		},
 	}
+
 	for _, p := range params {
 		t.Run(p.name, func(t *testing.T) {
 			require := require.New(t)
@@ -293,6 +294,32 @@ func TestValidate(t *testing.T) {
 				require.NoError(err)
 			} else {
 				require.Error(err)
+			}
+		})
+	}
+}
+
+func TestValidateNarratarr(t *testing.T) {
+	for _, tc := range []struct {
+		name string
+		url  string
+		user string
+		pass string
+		ok   bool
+	}{
+		{"valid", "http://localhost:7000/prefix", "user", "pass", true},
+		{"missing password", "http://localhost", "user", "", false},
+		{"missing username", "http://localhost", "", "pass", false},
+		{"invalid scheme", "ftp://localhost", "user", "pass", false},
+		{"invalid url", "http://", "user", "pass", false},
+		{"credentials in url", "http://user:pass@localhost", "user", "pass", false},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			c := &ArrConfig{URL: tc.url, AuthUsername: tc.user, AuthPassword: tc.pass}
+			if tc.ok {
+				require.NoError(t, c.ValidateNarratarr())
+			} else {
+				require.Error(t, c.ValidateNarratarr())
 			}
 		})
 	}

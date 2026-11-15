@@ -130,6 +130,17 @@ func (c *ArrConfig) Validate() error {
 	return nil
 }
 
+func (c *ArrConfig) ValidateNarratarr() error {
+	u, err := url.Parse(c.URL)
+	if err != nil || u.Host == "" || (u.Scheme != "http" && u.Scheme != "https") || u.User != nil || u.RawQuery != "" || u.Fragment != "" {
+		return fmt.Errorf("url must be a valid HTTP or HTTPS Narratarr URL without credentials, query, or fragment")
+	}
+	if c.AuthUsername == "" || c.AuthPassword == "" {
+		return fmt.Errorf("auth-username and auth-password are required for Narratarr")
+	}
+	return nil
+}
+
 func (c ArrConfig) Messages() map[string]string {
 	return validate.MS{
 		"ApiKey.regex":              "api-key must be a 20-32 character alphanumeric string",

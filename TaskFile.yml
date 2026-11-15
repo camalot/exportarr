@@ -1,0 +1,17 @@
+---
+
+version: '3'
+
+tasks:
+
+  tidy:
+    cmds:
+      - go mod tidy
+      - go fmt ./...
+      
+
+  test:
+    cmds:
+      - golangci-lint run -c .github/lint/golangci.yaml
+      - go test -v -race -covermode atomic -coverprofile=covprofile ./...
+      - go vet ./...

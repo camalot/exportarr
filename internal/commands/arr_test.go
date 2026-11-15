@@ -39,6 +39,7 @@ func TestBackwardsCompatibility(t *testing.T) {
 			flags: bazarrCmd.PersistentFlags(),
 		},
 	}
+
 	for _, p := range params {
 		t.Run(p.name, func(t *testing.T) {
 			p.flags.Set("basic-auth-username", "user")
@@ -52,4 +53,14 @@ func TestBackwardsCompatibility(t *testing.T) {
 		})
 	}
 
+}
+
+func TestNarratarrCommandConfig(t *testing.T) {
+	t.Setenv("AUTH_USERNAME", "narratarr-user")
+	t.Setenv("AUTH_PASSWORD", "narratarr-password")
+	c, err := config.LoadArrConfig(base_config.Config{URL: "http://narratarr.local"}, narratarrCmd.PersistentFlags())
+	require.NoError(t, err)
+	require.Equal(t, "narratarr-user", c.AuthUsername)
+	require.Equal(t, "narratarr-password", c.AuthPassword)
+	require.NoError(t, c.ValidateNarratarr())
 }
